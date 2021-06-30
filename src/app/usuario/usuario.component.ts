@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsuarioComponent implements OnInit {
 
+   urlImagenBTC : string ='https://s2.coinmarketcap.com/static/img/coins/64x64/1.png';
+
+   compraBTC: boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {
   }
-
+  selectedBTC(){
+    this.compraBTC = true;
+  }
 }

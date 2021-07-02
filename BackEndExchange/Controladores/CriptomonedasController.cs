@@ -1,4 +1,4 @@
-﻿using BackEndExchange.Model;
+using BackEndExchange.Model;
 using BackEndExchange.Model.Request;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -27,8 +27,23 @@ namespace BackEndExchange.Controladores
 
             //devuelve la entidad del contexto, capaz sea mejor pasar los datos a un modelo personalizado
             //y retornar ese objeto
-               var criptos = _ex.Criptomonedas.ToArray();
-                return Ok(criptos);
+               var criptos = _ex.Criptomonedas.ToList();
+      List<CriptomonedaModel> criptosToFrontend = new List<CriptomonedaModel>();
+               foreach (Criptomoneda c in criptos)
+      {
+        CriptomonedaModel cm = new CriptomonedaModel();
+         cm.IdCriptomoneda = c.IdCriptomoneda ;
+         cm.Nombre = c.Nombre ;
+         cm.PrecioCompra = c.PrecioCompra ;
+         cm.Stock = c.Stock ;
+         cm.Simbolo = c.Simbolo ;
+        cm.Capitalizacion = c.Capitalizacion ;
+         cm.ValorTotal = c.ValorTotal ;
+         cm.PrecioVenta = c.PrecioVenta ;
+         cm.ImagenUrl = c.ImagenUrl ;
+        criptosToFrontend.Add(cm);
+      }
+                return Ok(criptosToFrontend);
             
             
         }

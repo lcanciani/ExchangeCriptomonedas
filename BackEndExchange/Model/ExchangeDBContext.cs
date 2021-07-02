@@ -1,29 +1,25 @@
 ﻿using System;
 using System.IO;
-using BackEndExchange.Model.PropositoGeneral;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 
 #nullable disable
 
 namespace BackEndExchange.Model
 {
-    public partial class ExchangeDBContext : DbContext
+  
+
+  public partial class ExchangeDBContext : DbContext
     {
-        private static IConfiguration config { get; set; }
-        //private readonly AppSettings _connectionString;
-
-        public ExchangeDBContext()
+    private static IConfiguration Config { get; set; }
+    public ExchangeDBContext()
         {
-
         }
 
         public ExchangeDBContext(DbContextOptions<ExchangeDBContext> options)
             : base(options)
         {
-            
         }
 
         public virtual DbSet<Banco> Bancos { get; set; }
@@ -35,24 +31,18 @@ namespace BackEndExchange.Model
         public virtual DbSet<MovimientosFiat> MovimientosFiats { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
 
-        
-       
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-               // optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=ExchangeDB;Trusted_Connection=True;");
+
                 optionsBuilder.UseSqlServer(GetConnectionString());
             }
         }
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "Modern_Spanish_CI_AS");
-
-            
-
 
             modelBuilder.Entity<Banco>(entity =>
             {
@@ -146,14 +136,23 @@ namespace BackEndExchange.Model
                     .HasColumnType("decimal(18, 5)")
                     .HasColumnName("capitalizacion");
 
+                entity.Property(e => e.ImagenUrl)
+                    .HasMaxLength(100)
+                    .HasColumnName("imagenUrl")
+                    .IsFixedLength(true);
+
                 entity.Property(e => e.Nombre)
                     .HasMaxLength(30)
                     .HasColumnName("nombre")
                     .IsFixedLength(true);
 
-                entity.Property(e => e.Precio)
+                entity.Property(e => e.PrecioCompra)
                     .HasColumnType("decimal(18, 5)")
-                    .HasColumnName("precio");
+                    .HasColumnName("precioCompra");
+
+                entity.Property(e => e.PrecioVenta)
+                    .HasColumnType("decimal(18, 5)")
+                    .HasColumnName("precioVenta");
 
                 entity.Property(e => e.Simbolo)
                     .HasMaxLength(10)
@@ -180,6 +179,10 @@ namespace BackEndExchange.Model
                 entity.Property(e => e.Cantidad)
                     .HasColumnType("decimal(18, 5)")
                     .HasColumnName("cantidad");
+
+                entity.Property(e => e.ComisionCompraVenta)
+                    .HasColumnType("decimal(18, 5)")
+                    .HasColumnName("comisionCompraVenta");
 
                 entity.Property(e => e.IdCriptomoneda).HasColumnName("idCriptomoneda");
 
@@ -226,6 +229,11 @@ namespace BackEndExchange.Model
 
                 entity.Property(e => e.IdMovimientoCripto).HasColumnName("idMovimientoCripto");
 
+                entity.Property(e => e.ComisionCompraVenta)
+                    .HasMaxLength(10)
+                    .HasColumnName("comisionCompraVenta")
+                    .IsFixedLength(true);
+
                 entity.Property(e => e.IdBanco).HasColumnName("idBanco");
 
                 entity.Property(e => e.IdCriptomoneda).HasColumnName("idCriptomoneda");
@@ -259,6 +267,10 @@ namespace BackEndExchange.Model
                 entity.Property(e => e.IdMovimientoFiat).HasColumnName("idMovimientoFiat");
 
                 entity.Property(e => e.Cbu).HasColumnName("cbu");
+
+                entity.Property(e => e.ComisionDepositoRetiro)
+                    .HasColumnType("decimal(18, 5)")
+                    .HasColumnName("comisionDepositoRetiro");
 
                 entity.Property(e => e.IdBanco).HasColumnName("idBanco");
 
@@ -326,17 +338,16 @@ namespace BackEndExchange.Model
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+    private string GetConnectionString()
+    {
+      var builder = new ConfigurationBuilder()
+      .SetBasePath(Directory.GetCurrentDirectory())
+      .AddJsonFile("appsettings.json");
 
-        private string GetConnectionString()
-        {
-            var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json");
+      Config = builder.Build();
 
-            config = builder.Build();
+      return Config.GetConnectionString("DevConecction");
 
-            return config.GetConnectionString("DevConecction");
-
-        }
     }
+  }
 }

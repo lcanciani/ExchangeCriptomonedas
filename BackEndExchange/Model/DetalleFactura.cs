@@ -12,6 +12,7 @@ namespace BackEndExchange.Model
         public decimal? Precio { get; set; }
         public int? IdCriptomoneda { get; set; }
         public decimal? Cantidad { get; set; }
+        public decimal? ComisionCompraVenta { get; set; }
 
         public virtual Criptomoneda IdCriptomonedaNavigation { get; set; }
         public virtual Factura IdFacturaNavigation { get; set; }

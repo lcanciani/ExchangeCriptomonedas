@@ -1,4 +1,4 @@
-﻿using BackEndExchange.Model;
+using BackEndExchange.Model;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -49,7 +49,7 @@ namespace BackEndExchange.HostedServices
                 Criptomoneda p = new Criptomoneda();
                 p.IdCriptomoneda = 1;
                p= _ex.Criptomonedas.Find(p.IdCriptomoneda);
-                p.Precio = precioBitcon;
+                p.PrecioCompra = precioBitcon;
                 _ex.Criptomonedas.Update(p);
                 _ex.SaveChanges();
                 

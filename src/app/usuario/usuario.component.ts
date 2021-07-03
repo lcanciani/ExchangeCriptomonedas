@@ -29,4 +29,7 @@ export class UsuarioComponent implements OnInit {
   selectedBTC(){
     //this.compraBTC = true;
   }
+  openAdd(){
+    
+  }
 }

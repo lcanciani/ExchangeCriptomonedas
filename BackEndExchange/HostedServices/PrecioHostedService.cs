@@ -22,8 +22,7 @@ namespace BackEndExchange.HostedServices
         public PrecioHostedService( ILogger<PrecioHostedService> logger)
         {
             _logger = logger;
-            
-            
+
         }
 
         public void Dispose()
@@ -48,8 +47,9 @@ namespace BackEndExchange.HostedServices
             {
                 Criptomoneda p = new Criptomoneda();
                 p.IdCriptomoneda = 1;
-               p= _ex.Criptomonedas.Find(p.IdCriptomoneda);
+                p= _ex.Criptomonedas.Find(p.IdCriptomoneda);
                 p.PrecioCompra = precioBitcon;
+                
                 _ex.Criptomonedas.Update(p);
                 _ex.SaveChanges();
                 

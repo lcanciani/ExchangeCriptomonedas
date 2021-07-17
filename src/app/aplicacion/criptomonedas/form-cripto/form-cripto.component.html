@@ -1,0 +1,59 @@
+<div>
+    <h2>{{_titulo}}</h2>
+    <form [formGroup]="criptomonedasForm" (ngSubmit)="addCriptomoneda()" >
+        
+        <div>
+            <mat-form-field>
+                <input type="text" placeholder="Nombre" formControlName="nombre" matInput>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input type="text" placeholder="Precio compra" formControlName="precioCompra" matInput>
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field>
+                <input type="text" placeholder="Stock disponible" formControlName="stockDisponible" matInput>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input type="text" placeholder="Simbolo" formControlName="simbolo" matInput>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input type="text" placeholder="Porcentaje de ganancia" formControlName="porcentajeGanancia" matInput>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input type="text" placeholder="Stock total" formControlName="stockTotal" matInput>
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field>
+                <input type="text" placeholder="URL imagen" formControlName="imagenUrl" matInput>
+            </mat-form-field>
+        </div>
+
+        
+
+        <p>
+            <mat-form-field >
+              <mat-label>Date</mat-label>
+              <input matInput [matDatepicker]="dp3" disabled formControlName="fechaBaja">
+              <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+              <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+            </mat-form-field>
+          </p>
+
+
+        <div>
+            <button type="submit" mat-raised-button color="primary">{{_agregarEditarButton}}</button>
+        </div>
+    </form>
+</div>

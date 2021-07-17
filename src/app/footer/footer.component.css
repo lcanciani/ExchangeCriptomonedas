@@ -1,0 +1,11 @@
+.grid-dynamics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    /*grid-template-columns: repeat(autofill,100px);*/
+    margin: 30px;
+    position: relative;
+    
+    
+}
+
+

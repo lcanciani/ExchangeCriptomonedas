@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ETy4gqO1vx3281YdX87IlWUWqbWwBEqitE5hgeVdZw3mPvfLfNkpds/xtsdBu01+Z9LBFnNpJzgfMVdPYPZp3w==",
+  "dgSpecHash": "YcuebyN6YwowhsT4J0RpyxLkV1JE0N3bK5p33cHLQCLZ+qWlYU4FevsLlsOvXojSXJyojkuia+yfMT6n6JMHuA==",
   "success": true,
   "projectFilePath": "C:\\Users\\ferca\\source\\repos\\BackEndExchange\\BackEndExchange\\BackEndExchange.csproj",
   "expectedPackageFiles": [
@@ -37,6 +37,7 @@
     "C:\\Users\\ferca\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\ferca\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\ferca\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+    "C:\\Users\\ferca\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\runtime.native.system\\4.3.0\\runtime.native.system.4.3.0.nupkg.sha512",
     "C:\\Users\\ferca\\.nuget\\packages\\swashbuckle.aspnetcore\\6.1.4\\swashbuckle.aspnetcore.6.1.4.nupkg.sha512",
     "C:\\Users\\ferca\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.1.4\\swashbuckle.aspnetcore.swagger.6.1.4.nupkg.sha512",

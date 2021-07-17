@@ -1,0 +1,8 @@
+.grid-dynamics {
+    display: grid;
+    grid-template-columns: repeat(autofill, minmax(300px, 1fr));
+    /*grid-template-columns: repeat(autofill,100px);*/
+    margin: 30px;
+    grid-auto-flow: column;
+    
+}

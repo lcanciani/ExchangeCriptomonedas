@@ -1,0 +1,9 @@
+.grid{
+    display: grid;
+    
+    justify-content: center;
+}
+
+.contenedorLogin{
+    margin: 20px;
+}

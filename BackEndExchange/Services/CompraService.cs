@@ -1,4 +1,4 @@
-﻿using BackEndExchange.Model;
+using BackEndExchange.Model;
 using BackEndExchange.Model.Request;
 using Microsoft.Data.SqlClient;
 using System;
@@ -16,7 +16,7 @@ namespace BackEndExchange.Services
         {
             using (var exchangeDb = new ExchangeDBContext())
             {
-
+        double totalFactura = 0;
 
                 using (var registrarCompra = exchangeDb.Database.BeginTransaction())
                 {
@@ -27,20 +27,33 @@ namespace BackEndExchange.Services
                         facturaModel.IdUsuario = model.idUsuario;
                         facturaModel.Fecha = DateTime.Now;
                         exchangeDb.Facturas.Add(facturaModel);
-                        exchangeDb.SaveChanges();
+                        
 
                         foreach (var detalle in model.detalleFactura)
                         {
 
                             var df = new DetalleFactura();
-                            df.IdCriptomoneda = detalle.idCriptomoneda;
-                            df.Precio = (decimal)detalle.precio;
-                            df.Cantidad = (decimal)detalle.cantidad;
-                            df.IdFactura = facturaModel.IdFactura;
-                            exchangeDb.DetalleFacturas.Add(df);
-                            exchangeDb.SaveChanges();
-                        }
+                            
+              df.IdFactura = facturaModel.IdFactura;
+              df.Precio = (decimal)detalle.Precio;
+              df.IdCriptomoneda = detalle.IdCriptomoneda;
+              df.Cantidad = (decimal)detalle.Cantidad;
 
+              df.MontoTotalOperacion = detalle.MontoTotalOperacion;
+              df.Comision = detalle.Comision;
+              df.PorcentajeGanancia = detalle.PorcentajeGanancia;
+              totalFactura = totalFactura + (double)df.MontoTotalOperacion;
+                            exchangeDb.DetalleFacturas.Add(df);
+              //if()
+                            
+                        }
+            //Billetera b = new Billetera();
+            var Billetera = exchangeDb.Billeteras.Single<Billetera>(d => d.IdUsuario == facturaModel.IdUsuario);
+              if (totalFactura >= (double) Billetera.SaldoFiat)
+            exchangeDb.SaveChanges();
+            
+                        
+                        
                         registrarCompra.Commit();
                         
                     }
@@ -74,11 +87,17 @@ namespace BackEndExchange.Services
                             foreach (var detalle in model.detalleFactura) {
 
                             DetalleFactura df = new DetalleFactura();
-                            df.IdCriptomoneda = detalle.idCriptomoneda;
-                            df.Precio = (decimal)detalle.precio;
-                            df.Cantidad = (decimal)detalle.cantidad;
-                            df.IdFactura = detalle.idFactura;
-                            exchangeDb.DetalleFacturas.Remove(df);
+
+                df.IdFactura = detalle.IdFactura;
+                df.Precio = (decimal)detalle.Precio;
+                df.IdCriptomoneda = detalle.IdCriptomoneda;
+                df.Cantidad = (decimal)detalle.Cantidad;
+
+                df.MontoTotalOperacion = detalle.MontoTotalOperacion;
+                df.Comision = detalle.Comision;
+                df.PorcentajeGanancia = detalle.PorcentajeGanancia;
+
+                exchangeDb.DetalleFacturas.Remove(df);
                             exchangeDb.SaveChanges();
                         };
                             Factura facturaModel = new Factura();

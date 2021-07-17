@@ -1,4 +1,4 @@
-﻿using BackEndExchange.Model;
+using BackEndExchange.Model;
 using BackEndExchange.Model.Request;
 using BackEndExchange.Model.Response;
 using Microsoft.AspNetCore.Mvc;
@@ -122,8 +122,8 @@ namespace BackEndExchange.Controladores
             catch(Exception e)
             {
                 resp.exito = 0;
-                resp.mensaje = "No se pudo modificar el registro";
-                resp.Exception = e.Message;
+                resp.mensaje = "No se pudo modificar el registro: exception "+ e.Message;
+                
                 
                 return BadRequest(resp);
             }

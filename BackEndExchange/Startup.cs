@@ -43,7 +43,13 @@ namespace BackEndExchange
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BackExchange", Version = "v1" });
             });
             services.AddCors(options => {
-              options.AddPolicy(name: miCors, builder => { builder.WithOrigins("*"); });
+              options.AddPolicy(name: miCors, builder => {
+                builder.WithOrigins("*");
+                builder.WithHeaders("*");
+                //builder.WithExposedHeaders("*");
+                builder.WithMethods("*");
+                
+              });
               });
 
             //var connectionString = Configuration.GetConnectionString("DevConecction");

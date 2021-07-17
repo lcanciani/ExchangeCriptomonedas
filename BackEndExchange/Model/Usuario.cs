@@ -18,10 +18,9 @@ namespace BackEndExchange.Model
         public string Apellido { get; set; }
         public string Direccion { get; set; }
         public string Email { get; set; }
-        public decimal SaldoFiat { get; set; }
-        public decimal? ClavePublica { get; set; }
-        public decimal? ClavePrivada { get; set; }
         public string Contrasenia { get; set; }
+        public DateTime? FechaBaja { get; set; }
+        public string Dni { get; set; }
 
         public virtual ICollection<Billetera> Billeteras { get; set; }
         public virtual ICollection<Factura> Facturas { get; set; }

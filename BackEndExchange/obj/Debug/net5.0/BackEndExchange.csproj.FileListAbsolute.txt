@@ -75,3 +75,4 @@ C:\Users\ferca\source\repos\BackEndExchange\BackEndExchange\bin\Debug\net5.0\Swa
 C:\Users\ferca\source\repos\BackEndExchange\BackEndExchange\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\ferca\source\repos\BackEndExchange\BackEndExchange\obj\Debug\net5.0\BackEndExchange.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\ferca\source\repos\BackEndExchange\BackEndExchange\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\ferca\source\repos\BackEndExchange\BackEndExchange\bin\Debug\net5.0\Newtonsoft.Json.dll

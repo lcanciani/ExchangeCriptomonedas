@@ -1,4 +1,4 @@
-﻿using BackEndExchange.Model.Request;
+using BackEndExchange.Model.Request;
 using BackEndExchange.Model.Response;
 using BackEndExchange.Services;
 using Microsoft.AspNetCore.Http;
@@ -33,7 +33,7 @@ namespace BackEndExchange.Controladores
             {
                 respuesta.exito = 0;
                 respuesta.mensaje = "Usuario o contraseña incorrecto";
-                return BadRequest(respuesta);
+                return Ok(respuesta);
 
             }
 

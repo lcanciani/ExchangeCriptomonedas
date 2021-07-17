@@ -1,0 +1,29 @@
+<!--<div class="grid">
+    <div>
+        <p>Dashboard</p>
+    </div>
+    <div>
+        <button  (click)="irCompraVenta()">CompraVenta</button>
+    </div>
+    <div>
+        <p>Editar</p>
+    </div>
+    <div>
+        <app-deslogear></app-deslogear>
+    </div>
+</div>-->
+
+<mat-toolbar color="primary" class="grid">
+    
+    
+    <button mat-button (click)="irCompraVenta()" >Dashboard</button>
+    <button mat-button routerLink="/aplicacion/venta">CompraVenta</button>
+    <button mat-button routerLink="/aplicacion/editar">Editar</button>
+    
+    <!-- <button mat-button routerLink="/dashboard">LogOut</button> 
+    <button mat-icon-button class="example-icon" routerLink="/" aria-label="Example icon-button with menu icon">
+      <mat-icon>logout</mat-icon>
+    </button>-->
+    <app-deslogear></app-deslogear>
+  </mat-toolbar>
+

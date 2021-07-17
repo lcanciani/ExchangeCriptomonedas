@@ -1,4 +1,4 @@
-﻿using BackEndExchange.Model;
+using BackEndExchange.Model;
 using BackEndExchange.Model.Request;
 using BackEndExchange.Model.Response;
 using BackEndExchange.Services;
@@ -109,9 +109,7 @@ namespace BackEndExchange.Controladores
                 usuarioModificar.Apellido = model.Apellido;
                 usuarioModificar.Direccion = model.Direccion;
                 usuarioModificar.Email = model.Email;
-                usuarioModificar.SaldoFiat = model.SaldoFiat;
-                usuarioModificar.ClavePublica = model.ClavePublica;
-                usuarioModificar.ClavePrivada = model.ClavePrivada;
+               
                 usuarioModificar.Contrasenia = model.Contrasenia;
                 
                 _ex.Usuarios.Update(usuarioModificar);
@@ -123,8 +121,8 @@ namespace BackEndExchange.Controladores
             catch (Exception e)
             {
                 resp.exito = 0;
-                resp.mensaje = "No se pudo modificar el usuario";
-                resp.Exception = e.Message;
+                resp.mensaje = "No se pudo modificar el usuario: exception " + e.Message;
+                
 
                 return BadRequest(resp);
             }

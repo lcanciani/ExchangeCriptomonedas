@@ -1,0 +1,5 @@
+.grid-dynamics{
+    display: grid;
+    grid-template-columns: repeat(autofit, minmax(1000px, 1fr));
+    margin: 30px; 
+}

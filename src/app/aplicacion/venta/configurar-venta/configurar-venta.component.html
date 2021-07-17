@@ -1,0 +1,17 @@
+<div>
+    <h2>Comprar {{criptomonedaNombre}}</h2>
+
+    <div>
+        <p>Ingrese el monto a comprar. Bienvenido a la LIBERTAD FINANCIERA!</p>
+        <input type="number" (input)="onSearchChange($event.target.value)">
+        <hr>
+        <input type="number" value="{{cantidadCripto}}">
+    </div>
+    <div>
+        <p>Tené en cuenta que la compra de {{criptomonedaNombre}} tiene {{comision | percent}} de comisión.</p>
+
+    </div>
+    <div>
+        <button (click)="confirmarVenta()">Confirmar compra</button>
+    </div>
+</div>

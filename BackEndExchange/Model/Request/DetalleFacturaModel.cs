@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,13 +8,14 @@ namespace BackEndExchange.Model.Request
     public class DetalleFacturaModel
     {
 
-        public int idFactura { get; set; }
+    public int IdDetalleFactura { get; set; }
+    public int? IdFactura { get; set; }
+    public decimal? Precio { get; set; }
+    public int? IdCriptomoneda { get; set; }
+    public decimal? Cantidad { get; set; }
+    public decimal? MontoTotalOperacion { get; set; }
+    public decimal? Comision { get; set; }
+    public decimal? PorcentajeGanancia { get; set; }
 
-        public int idCriptomoneda { get; set; }
-
-        public double precio { get; set; }
-
-        public double cantidad { get; set; }
-
-    }
+  }
 }

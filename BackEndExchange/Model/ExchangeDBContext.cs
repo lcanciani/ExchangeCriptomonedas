@@ -1,19 +1,14 @@
 ﻿using System;
-using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Configuration;
 
 #nullable disable
 
 namespace BackEndExchange.Model
 {
-  
-
-  public partial class ExchangeDBContext : DbContext
+    public partial class ExchangeDBContext : DbContext
     {
-    private static IConfiguration Config { get; set; }
-    public ExchangeDBContext()
+        public ExchangeDBContext()
         {
         }
 
@@ -24,19 +19,19 @@ namespace BackEndExchange.Model
 
         public virtual DbSet<Banco> Bancos { get; set; }
         public virtual DbSet<Billetera> Billeteras { get; set; }
+        public virtual DbSet<Cotizacion> Cotizacions { get; set; }
         public virtual DbSet<Criptomoneda> Criptomonedas { get; set; }
         public virtual DbSet<DetalleFactura> DetalleFacturas { get; set; }
         public virtual DbSet<Factura> Facturas { get; set; }
-        public virtual DbSet<MovimientosCripto> MovimientosCriptos { get; set; }
-        public virtual DbSet<MovimientosFiat> MovimientosFiats { get; set; }
+        public virtual DbSet<TiposMovimiento> TiposMovimientos { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-
-                optionsBuilder.UseSqlServer(GetConnectionString());
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Data Source=192.168.1.4;Initial Catalog=ExchangeDB;User ID=sa;Password=sqlLove;");
             }
         }
 
@@ -65,6 +60,10 @@ namespace BackEndExchange.Model
                     .HasColumnName("direccion")
                     .IsFixedLength(true);
 
+                entity.Property(e => e.FechaBaja)
+                    .HasColumnType("date")
+                    .HasColumnName("fechaBaja");
+
                 entity.Property(e => e.RazonSocial)
                     .HasMaxLength(30)
                     .HasColumnName("razonSocial")
@@ -88,42 +87,58 @@ namespace BackEndExchange.Model
                     .HasColumnType("decimal(18, 5)")
                     .HasColumnName("cantidad");
 
+                entity.Property(e => e.ClavePrivada)
+                    .HasColumnType("decimal(18, 5)")
+                    .HasColumnName("clavePrivada");
+
+                entity.Property(e => e.ClavePublica)
+                    .HasColumnType("decimal(18, 5)")
+                    .HasColumnName("clavePublica");
+
                 entity.Property(e => e.DireccionBilletera)
                     .HasMaxLength(50)
                     .HasColumnName("direccionBilletera")
                     .IsFixedLength(true);
 
+                entity.Property(e => e.FechaBaja)
+                    .HasColumnType("date")
+                    .HasColumnName("fechaBaja");
+
                 entity.Property(e => e.IdCriptomoneda).HasColumnName("idCriptomoneda");
-
-                entity.Property(e => e.IdMovimientoCripto).HasColumnName("idMovimientoCripto");
-
-                entity.Property(e => e.IdMovimientoFiat).HasColumnName("idMovimientoFiat");
 
                 entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
 
-                entity.Property(e => e.Saldo)
+                entity.Property(e => e.SaldoFiat)
                     .HasColumnType("decimal(18, 5)")
-                    .HasColumnName("saldo");
+                    .HasColumnName("saldoFiat");
 
                 entity.HasOne(d => d.IdCriptomonedaNavigation)
                     .WithMany(p => p.Billeteras)
                     .HasForeignKey(d => d.IdCriptomoneda)
-                    .HasConstraintName("FK_Billetera_Criptomonedas");
-
-                entity.HasOne(d => d.IdMovimientoCriptoNavigation)
-                    .WithMany(p => p.Billeteras)
-                    .HasForeignKey(d => d.IdMovimientoCripto)
-                    .HasConstraintName("FK_Billetera_MovimientosCripto");
-
-                entity.HasOne(d => d.IdMovimientoFiatNavigation)
-                    .WithMany(p => p.Billeteras)
-                    .HasForeignKey(d => d.IdMovimientoFiat)
-                    .HasConstraintName("FK_Billetera_MovimientosFiat");
+                    .HasConstraintName("FK_Billetera_Criptomonedas1");
 
                 entity.HasOne(d => d.IdUsuarioNavigation)
                     .WithMany(p => p.Billeteras)
                     .HasForeignKey(d => d.IdUsuario)
                     .HasConstraintName("FK_Billetera_Usuarios");
+            });
+
+            modelBuilder.Entity<Cotizacion>(entity =>
+            {
+                entity.HasKey(e => e.IdCotizacion);
+
+                entity.ToTable("Cotizacion");
+
+                entity.Property(e => e.IdCotizacion).HasColumnName("idCotizacion");
+
+                entity.Property(e => e.CotizacionPesos)
+                    .HasColumnType("decimal(18, 5)")
+                    .HasColumnName("cotizacionPesos");
+
+                entity.Property(e => e.Divisa)
+                    .HasMaxLength(50)
+                    .HasColumnName("divisa")
+                    .IsFixedLength(true);
             });
 
             modelBuilder.Entity<Criptomoneda>(entity =>
@@ -132,9 +147,9 @@ namespace BackEndExchange.Model
 
                 entity.Property(e => e.IdCriptomoneda).HasColumnName("idCriptomoneda");
 
-                entity.Property(e => e.Capitalizacion)
-                    .HasColumnType("decimal(18, 5)")
-                    .HasColumnName("capitalizacion");
+                entity.Property(e => e.FechaBaja)
+                    .HasColumnType("date")
+                    .HasColumnName("fechaBaja");
 
                 entity.Property(e => e.ImagenUrl)
                     .HasMaxLength(100)
@@ -146,26 +161,26 @@ namespace BackEndExchange.Model
                     .HasColumnName("nombre")
                     .IsFixedLength(true);
 
+                entity.Property(e => e.PorcentajeGanancia)
+                    .HasColumnType("decimal(18, 5)")
+                    .HasColumnName("porcentajeGanancia");
+
                 entity.Property(e => e.PrecioCompra)
                     .HasColumnType("decimal(18, 5)")
                     .HasColumnName("precioCompra");
-
-                entity.Property(e => e.PrecioVenta)
-                    .HasColumnType("decimal(18, 5)")
-                    .HasColumnName("precioVenta");
 
                 entity.Property(e => e.Simbolo)
                     .HasMaxLength(10)
                     .HasColumnName("simbolo")
                     .IsFixedLength(true);
 
-                entity.Property(e => e.Stock)
+                entity.Property(e => e.StockDisponible)
                     .HasColumnType("decimal(18, 5)")
-                    .HasColumnName("stock");
+                    .HasColumnName("stockDisponible");
 
-                entity.Property(e => e.ValorTotal)
+                entity.Property(e => e.StockTotal)
                     .HasColumnType("decimal(18, 5)")
-                    .HasColumnName("valorTotal");
+                    .HasColumnName("stockTotal");
             });
 
             modelBuilder.Entity<DetalleFactura>(entity =>
@@ -180,13 +195,21 @@ namespace BackEndExchange.Model
                     .HasColumnType("decimal(18, 5)")
                     .HasColumnName("cantidad");
 
-                entity.Property(e => e.ComisionCompraVenta)
+                entity.Property(e => e.Comision)
                     .HasColumnType("decimal(18, 5)")
-                    .HasColumnName("comisionCompraVenta");
+                    .HasColumnName("comision");
 
                 entity.Property(e => e.IdCriptomoneda).HasColumnName("idCriptomoneda");
 
                 entity.Property(e => e.IdFactura).HasColumnName("idFactura");
+
+                entity.Property(e => e.MontoTotalOperacion)
+                    .HasColumnType("decimal(18, 5)")
+                    .HasColumnName("montoTotalOperacion");
+
+                entity.Property(e => e.PorcentajeGanancia)
+                    .HasColumnType("decimal(18, 5)")
+                    .HasColumnName("porcentajeGanancia");
 
                 entity.Property(e => e.Precio)
                     .HasColumnType("decimal(18, 5)")
@@ -213,7 +236,21 @@ namespace BackEndExchange.Model
                     .HasColumnType("datetime")
                     .HasColumnName("fecha");
 
+                entity.Property(e => e.IdBanco).HasColumnName("idBanco");
+
+                entity.Property(e => e.IdTipoMovimiento).HasColumnName("idTipoMovimiento");
+
                 entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
+
+                entity.HasOne(d => d.IdBancoNavigation)
+                    .WithMany(p => p.Facturas)
+                    .HasForeignKey(d => d.IdBanco)
+                    .HasConstraintName("FK_Facturas_Bancos");
+
+                entity.HasOne(d => d.IdTipoMovimientoNavigation)
+                    .WithMany(p => p.Facturas)
+                    .HasForeignKey(d => d.IdTipoMovimiento)
+                    .HasConstraintName("FK_Facturas_TiposMovimiento");
 
                 entity.HasOne(d => d.IdUsuarioNavigation)
                     .WithMany(p => p.Facturas)
@@ -221,72 +258,24 @@ namespace BackEndExchange.Model
                     .HasConstraintName("FK_Facturas_Usuarios");
             });
 
-            modelBuilder.Entity<MovimientosCripto>(entity =>
+            modelBuilder.Entity<TiposMovimiento>(entity =>
             {
-                entity.HasKey(e => e.IdMovimientoCripto);
+                entity.HasKey(e => e.IdTiposMovimiento)
+                    .HasName("PK_TiposMovimiento_1");
 
-                entity.ToTable("MovimientosCripto");
+                entity.ToTable("TiposMovimiento");
 
-                entity.Property(e => e.IdMovimientoCripto).HasColumnName("idMovimientoCripto");
+                entity.Property(e => e.IdTiposMovimiento).HasColumnName("idTiposMovimiento");
 
-                entity.Property(e => e.ComisionCompraVenta)
-                    .HasMaxLength(10)
-                    .HasColumnName("comisionCompraVenta")
-                    .IsFixedLength(true);
-
-                entity.Property(e => e.IdBanco).HasColumnName("idBanco");
-
-                entity.Property(e => e.IdCriptomoneda).HasColumnName("idCriptomoneda");
-
-                entity.Property(e => e.Monto)
+                entity.Property(e => e.Comision)
                     .HasColumnType("decimal(18, 5)")
-                    .HasColumnName("monto");
+                    .HasColumnName("comision");
 
                 entity.Property(e => e.Tipo)
+                    .IsRequired()
                     .HasMaxLength(30)
                     .HasColumnName("tipo")
                     .IsFixedLength(true);
-
-                entity.HasOne(d => d.IdBancoNavigation)
-                    .WithMany(p => p.MovimientosCriptos)
-                    .HasForeignKey(d => d.IdBanco)
-                    .HasConstraintName("FK_MovimientosCripto_Bancos");
-
-                entity.HasOne(d => d.IdCriptomonedaNavigation)
-                    .WithMany(p => p.MovimientosCriptos)
-                    .HasForeignKey(d => d.IdCriptomoneda)
-                    .HasConstraintName("FK_MovimientosCripto_Criptomonedas");
-            });
-
-            modelBuilder.Entity<MovimientosFiat>(entity =>
-            {
-                entity.HasKey(e => e.IdMovimientoFiat);
-
-                entity.ToTable("MovimientosFiat");
-
-                entity.Property(e => e.IdMovimientoFiat).HasColumnName("idMovimientoFiat");
-
-                entity.Property(e => e.Cbu).HasColumnName("cbu");
-
-                entity.Property(e => e.ComisionDepositoRetiro)
-                    .HasColumnType("decimal(18, 5)")
-                    .HasColumnName("comisionDepositoRetiro");
-
-                entity.Property(e => e.IdBanco).HasColumnName("idBanco");
-
-                entity.Property(e => e.Monto)
-                    .HasColumnType("decimal(18, 5)")
-                    .HasColumnName("monto");
-
-                entity.Property(e => e.Tipo)
-                    .HasMaxLength(10)
-                    .HasColumnName("tipo")
-                    .IsFixedLength(true);
-
-                entity.HasOne(d => d.IdBancoNavigation)
-                    .WithMany(p => p.MovimientosFiats)
-                    .HasForeignKey(d => d.IdBanco)
-                    .HasConstraintName("FK_MovimientosFiat_Bancos");
             });
 
             modelBuilder.Entity<Usuario>(entity =>
@@ -300,14 +289,6 @@ namespace BackEndExchange.Model
                     .HasColumnName("apellido")
                     .IsFixedLength(true);
 
-                entity.Property(e => e.ClavePrivada)
-                    .HasColumnType("decimal(18, 5)")
-                    .HasColumnName("clavePrivada");
-
-                entity.Property(e => e.ClavePublica)
-                    .HasColumnType("decimal(18, 5)")
-                    .HasColumnName("clavePublica");
-
                 entity.Property(e => e.Contrasenia)
                     .HasMaxLength(100)
                     .HasColumnName("contrasenia")
@@ -318,36 +299,31 @@ namespace BackEndExchange.Model
                     .HasColumnName("direccion")
                     .IsFixedLength(true);
 
+                entity.Property(e => e.Dni)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("dni")
+                    .IsFixedLength(true);
+
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("email")
                     .IsFixedLength(true);
 
+                entity.Property(e => e.FechaBaja)
+                    .HasColumnType("date")
+                    .HasColumnName("fechaBaja");
+
                 entity.Property(e => e.Nombre)
                     .HasMaxLength(50)
                     .HasColumnName("nombre")
                     .IsFixedLength(true);
-
-                entity.Property(e => e.SaldoFiat)
-                    .HasColumnType("decimal(18, 5)")
-                    .HasColumnName("saldoFiat");
             });
 
             OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-    private string GetConnectionString()
-    {
-      var builder = new ConfigurationBuilder()
-      .SetBasePath(Directory.GetCurrentDirectory())
-      .AddJsonFile("appsettings.json");
-
-      Config = builder.Build();
-
-      return Config.GetConnectionString("DevConecction");
-
     }
-  }
 }

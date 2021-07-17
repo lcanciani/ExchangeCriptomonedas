@@ -9,8 +9,7 @@ namespace BackEndExchange.Model
     {
         public Banco()
         {
-            MovimientosCriptos = new HashSet<MovimientosCripto>();
-            MovimientosFiats = new HashSet<MovimientosFiat>();
+            Facturas = new HashSet<Factura>();
         }
 
         public int IdBanco { get; set; }
@@ -19,8 +18,8 @@ namespace BackEndExchange.Model
         public string Ciudad { get; set; }
         public string Ciut { get; set; }
         public string Telefono { get; set; }
+        public DateTime? FechaBaja { get; set; }
 
-        public virtual ICollection<MovimientosCripto> MovimientosCriptos { get; set; }
-        public virtual ICollection<MovimientosFiat> MovimientosFiats { get; set; }
+        public virtual ICollection<Factura> Facturas { get; set; }
     }
 }

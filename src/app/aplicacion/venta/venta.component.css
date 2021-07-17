@@ -1,0 +1,20 @@
+.grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    width: 100%;
+}
+.cripto{
+    
+    display: flex;
+    height: 200px;
+    width: 100%;
+   justify-content: center;
+   align-items: center;
+    
+}
+
+.gridChild{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+
+}

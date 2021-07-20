@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CriptomonedaModel } from '../criptomoneda.model';
 import { CriptomonedasService } from '../criptomonedas.service';
@@ -11,7 +11,7 @@ import { CriptomonedasService } from '../criptomonedas.service';
 })
 export class ListaCriptoComponent implements OnInit {
 
-  listCriptomonedas : CriptomonedaModel[] ;
+  @Input('listCriptomonedas') listCriptomonedas : CriptomonedaModel[];
   public columnas : string[] = ['id','nombre','accion'];
   criptomonedaModel : CriptomonedaModel;
   
@@ -22,11 +22,11 @@ export class ListaCriptoComponent implements OnInit {
 
     this.criptomonedasService.getCriptomonedas().subscribe(response => {
       this.listCriptomonedas = response.data;
-      console.log(response);
+      
     })
   }
 cargarCripto(element: CriptomonedaModel){
-  console.log(element.idCriptomoneda);
+  
   this.criptomonedasService.cargarCripto(element);
 //console.log("este es el hdp: -> ")
   //console.log(element.idCriptomoneda);

@@ -20,9 +20,11 @@ export class CriptomonedasService {
     private criptoModel:CriptomonedaModel ;
     private _editarCriptomoneda = new BehaviorSubject<CriptomonedaModel>({}as any);
 
-    constructor(private _http:HttpClient){
+    constructor(private _http:HttpClient){}
 
-
+   
+    actualizarLista(criptos: CriptomonedaModel[]){
+        this.listCriptomonedas = criptos;
     }
 
     getCriptomonedas(): Observable<Respuesta>{

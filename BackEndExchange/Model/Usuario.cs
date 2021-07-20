@@ -21,6 +21,7 @@ namespace BackEndExchange.Model
         public string Contrasenia { get; set; }
         public DateTime? FechaBaja { get; set; }
         public string Dni { get; set; }
+        public decimal? SaldoFiatUsuario { get; set; }
 
         public virtual ICollection<Billetera> Billeteras { get; set; }
         public virtual ICollection<Factura> Facturas { get; set; }

@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CriptomonedaModel } from '../../criptomonedas/criptomoneda.model';
+import { ConfirmarVentaModel } from '../confirmar-venta/confirmarVenta.model';
 import { VentaService } from '../venta.service';
-import { ConfiguracionVenta } from './cofiguracionVenta.model';
+
 
 @Component({
   selector: 'app-configurar-venta',
@@ -11,39 +11,45 @@ import { ConfiguracionVenta } from './cofiguracionVenta.model';
   styleUrls: ['./configurar-venta.component.css']
 })
 export class ConfigurarVentaComponent implements OnInit {
-  private _formConfigurarVenta: FormGroup;
-  private _criptoVenta: ConfiguracionVenta ;
-  criptomonedaNombre: string ;
-  comision: number;
-  montoVenta: number;
-  precioVenta: number;
+  public formConfigurarVenta: FormGroup;
+  datosVenta :ConfirmarVentaModel = new ConfirmarVentaModel();  
   cantidadCripto: number;
+    
   constructor(private _ventaService: VentaService,
               private _formBuilder: FormBuilder,
               private _route: Router) { }
 
   ngOnInit(): void {
-    this._formConfigurarVenta = this._formBuilder.group({
-
+    this.formConfigurarVenta = this._formBuilder.group({
+      monto:[''],
+      cantidad:['']
     });
 
     this._ventaService.getCriptoAConfigurarVenta().subscribe(resp => {
+       this.datosVenta.nombreCriptomoneda = resp.data.nombreCriptomoneda;
+      this.datosVenta.comision = resp.data.comision;
+      this.datosVenta.idTipoMovimiento = resp.data.idTipoMovimiento;
+      this.datosVenta.idCriptomoneda = resp.data.idCriptomoneda;
+      this.datosVenta.porcentajeGanancia = resp.data.porcentajeGanancia;
+      this.datosVenta.precioVenta = resp.data.precioVenta;
       
-      this.precioVenta = resp.data.precioVenta;
-      
-     this.criptomonedaNombre = resp.data.nombreCriptomoneda;
-      this.comision = resp.data.comision;
+     var usuario = JSON.parse( localStorage.getItem('usuario'));
+       this.datosVenta.idUsuario = usuario.idUsuario
+      this.datosVenta.cotizacionDolar = 0;
     })
   }
+  
   onSearchChange(monto: number){
     if(monto === undefined){
-      this.cantidadCripto = undefined;
+      this.datosVenta.cantidad = undefined;
     }
-    monto =  monto - (monto * this.comision);
-    monto = monto / this.precioVenta;
-    this.cantidadCripto = monto;
+    this.datosVenta.monto = monto;
+    monto =  monto - (monto * this.datosVenta.comision);
+    monto = monto / this.datosVenta.precioVenta;
+     this.datosVenta.cantidad = monto;
   }
-  confirmarVenta(){
-this._route.navigate(['confirmarVenta']);
+  confirmarVenta(){  
+this._ventaService.confirmarVenta(this.datosVenta);
+this._route.navigate(['comp/confirmarVenta']);
   }
 }

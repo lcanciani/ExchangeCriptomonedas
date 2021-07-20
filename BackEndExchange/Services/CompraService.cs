@@ -1,5 +1,7 @@
 using BackEndExchange.Model;
+using BackEndExchange.Model.PropositoGeneral;
 using BackEndExchange.Model.Request;
+using BackEndExchange.Model.Response;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -12,63 +14,101 @@ namespace BackEndExchange.Services
     {
         
 
-        public void add(Model.Request.FacturaModel model)
+        public RespuestaModel add(ConfirmarCompraModel model)
         {
-            using (var exchangeDb = new ExchangeDBContext())
-            {
-        double totalFactura = 0;
+       
+      RespuestaModel rm = new RespuestaModel();
+      using (var exchangeDb = new ExchangeDBContext())
+      {
+        double totalFactura = model.PrecioVenta + model.PrecioVenta * (model.Comision + 1);
 
-                using (var registrarCompra = exchangeDb.Database.BeginTransaction())
-                {
-                    try
-                    {
-
-                        Factura facturaModel = new Factura();
-                        facturaModel.IdUsuario = model.idUsuario;
-                        facturaModel.Fecha = DateTime.Now;
-                        exchangeDb.Facturas.Add(facturaModel);
-                        
-
-                        foreach (var detalle in model.detalleFactura)
-                        {
-
-                            var df = new DetalleFactura();
-                            
-              df.IdFactura = facturaModel.IdFactura;
-              df.Precio = (decimal)detalle.Precio;
-              df.IdCriptomoneda = detalle.IdCriptomoneda;
-              df.Cantidad = (decimal)detalle.Cantidad;
-
-              df.MontoTotalOperacion = detalle.MontoTotalOperacion;
-              df.Comision = detalle.Comision;
-              df.PorcentajeGanancia = detalle.PorcentajeGanancia;
-              totalFactura = totalFactura + (double)df.MontoTotalOperacion;
-                            exchangeDb.DetalleFacturas.Add(df);
-              //if()
-                            
-                        }
-            //Billetera b = new Billetera();
-            var Billetera = exchangeDb.Billeteras.Single<Billetera>(d => d.IdUsuario == facturaModel.IdUsuario);
-              if (totalFactura >= (double) Billetera.SaldoFiat)
-            exchangeDb.SaveChanges();
+        using (var registrarCompra = exchangeDb.Database.BeginTransaction())
+        {
+          try
+          {
             
-                        
-                        
-                        registrarCompra.Commit();
-                        
-                    }
+            var usuario = exchangeDb.Usuarios.Where(d => d.IdUsuario == model.IdUsuario).FirstOrDefault();
+            var Billetera = new Billetera();
+            Billetera.Cantidad = 0;
+            if (totalFactura <= (double)usuario.SaldoFiatUsuario)
+            {
+             
+              usuario.SaldoFiatUsuario = usuario.SaldoFiatUsuario - (decimal)totalFactura;
+              exchangeDb.Entry(usuario).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+              
+              double precioCompra = 0;
+              
+              Factura fm = new Factura();
+              var dfm = new DetalleFactura();
+              fm.IdUsuario = model.IdUsuario;
+              fm.Fecha = DateTime.Now;
+              fm.IdTipoMovimiento = model.IdTipoMovimiento;
+              fm.IdBanco = null;
+              exchangeDb.Facturas.Add(fm);
+              
+              
+              dfm.IdCriptomoneda = model.IdCriptomoneda;
+              dfm.IdFactura = fm.IdFactura;
+              precioCompra = model.PrecioVenta / (model.PorcentajeGanancia + 1);
+              dfm.Cantidad = (decimal?)model.Cantidad;
+              dfm.Precio = (decimal)precioCompra;
+              
+              var cotizacionDolar = exchangeDb.Cotizacions.Single(d => d.IdCotizacion == 1);
+              dfm.CotizacionDolar = cotizacionDolar.CotizacionPesos;
+              dfm.Comision = (decimal?)model.Comision;
+              dfm.PorcentajeGanancia = (decimal?)model.PorcentajeGanancia;
+              exchangeDb.DetalleFacturas.Add(dfm);
+              
+             
+              Billetera.Cantidad = 0;
+              var billetera = exchangeDb.Billeteras.Where(d =>
+             
+                d.IdUsuario == model.IdUsuario && d.IdCriptomoneda == model.IdCriptomoneda
+              ).FirstOrDefault();
+              if (billetera != null)
+              {
+                Billetera.Cantidad = billetera.Cantidad + (decimal?)model.Cantidad;
+                
+              }
 
-                    catch (Exception )
-                    {
+              Billetera.Cantidad = (decimal?)model.Cantidad;
 
-                        registrarCompra.Rollback();
-                        
-                    }
 
-                }
+              Billetera.IdUsuario = model.IdUsuario;
+              Billetera.IdCriptomoneda = model.IdCriptomoneda;
+              Billetera.FechaBaja = null;
+              Billetera.DireccionBilletera = null;
+              Billetera.ClavePrivada = null;
+              Billetera.ClavePublica = null;
 
+              exchangeDb.Billeteras.Add(Billetera);
+              exchangeDb.SaveChanges();
+              registrarCompra.Commit();
+
+              rm.exito = 1;
+              return rm;
             }
+
+
+            else
+            {
+              rm.exito = 0;
+              rm.mensanje = "El saldo es insuficiente";
+              return rm;
+            }
+          }
+          catch (Exception e)
+          {
+            Console.WriteLine(e.Message);
+            registrarCompra.Rollback();
+            rm.mensanje = "fallo try "+ e.Message;
+            rm.exito = 0;
+            return rm;
+          }
         }
+      
+      }
+    }
 
         
 
@@ -93,7 +133,7 @@ namespace BackEndExchange.Services
                 df.IdCriptomoneda = detalle.IdCriptomoneda;
                 df.Cantidad = (decimal)detalle.Cantidad;
 
-                df.MontoTotalOperacion = detalle.MontoTotalOperacion;
+                df.CotizacionDolar = detalle.CotizacionDolar;
                 df.Comision = detalle.Comision;
                 df.PorcentajeGanancia = detalle.PorcentajeGanancia;
 

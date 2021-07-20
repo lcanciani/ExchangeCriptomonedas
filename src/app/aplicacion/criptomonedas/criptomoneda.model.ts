@@ -5,7 +5,6 @@ export interface CriptomonedaModel{
       precioCompra:number
      stockDisponible:number 
       simbolo:string 
-     
       stockTotal :number
       porcentajeGanancia: number;
     imagenUrl: string

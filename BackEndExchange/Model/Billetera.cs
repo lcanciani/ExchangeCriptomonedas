@@ -8,7 +8,6 @@ namespace BackEndExchange.Model
     public partial class Billetera
     {
         public int IdBilletera { get; set; }
-        public decimal? SaldoFiat { get; set; }
         public decimal? Cantidad { get; set; }
         public int? IdUsuario { get; set; }
         public string DireccionBilletera { get; set; }

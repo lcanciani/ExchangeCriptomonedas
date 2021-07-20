@@ -141,14 +141,15 @@ namespace BackEndExchange.Controladores
         c.PrecioCompra = (decimal?)model.PrecioCompra;
         c.StockDisponible = (decimal?)model.StockDisponible;
         c.Simbolo = model.Simbolo;
-        
-        c.StockTotal = (decimal?)model.StockTotal;
-        
+        c.PorcentajeGanancia = (decimal?)model.PorcentajeGanancia;
+        c.StockTotal = (decimal?)model.StockTotal;       
         c.ImagenUrl = model.ImagenUrl;
+        c.FechaBaja = model.FechaBaja;
         _ex.Entry(c).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
         _ex.SaveChanges();
-        rm.exito = 1;
         
+        rm.exito = 1;
+        rm.data = _ex.Criptomonedas.ToList();
         return Ok(rm);
       }
       catch(Exception e)

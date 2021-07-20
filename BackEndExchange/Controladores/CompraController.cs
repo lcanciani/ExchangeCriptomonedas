@@ -19,10 +19,11 @@ namespace BackEndExchange.Controladores
     public class CompraController : ControllerBase
     {
         private ExchangeDBContext _ex;
-        
-         public CompraController (ExchangeDBContext ex)
+        private ICompraService _cs;
+         public CompraController (ExchangeDBContext ex, ICompraService cs)
     {
       _ex = ex;
+      _cs = cs;
     }
 
         // GET: api/<CompraController>
@@ -97,58 +98,58 @@ namespace BackEndExchange.Controladores
 
         // POST api/<CompraController>
         [HttpPost]
-        public IActionResult Post([FromBody] Model.Request.FacturaModel model)
+        public IActionResult Post([FromBody] ConfirmarCompraModel model)
         {
-            
 
-            
-           //using(var exchangeDb = new ExchangeDBContext())
-           // {
+      
+      return Ok(_cs.add(model));
+      //using(var exchangeDb = new ExchangeDBContext())
+      // {
 
 
-           //         using (var registrarCompra = exchangeDb.Database.BeginTransaction())
-           //         {
-           //             try
-           //             {
-                            
-           //                 Factura facturaModel = new Factura();
-           //                 facturaModel.IdUsuario = model.idUsuario;
-           //                 facturaModel.Fecha = DateTime.Now;
-           //                 exchangeDb.Facturas.Add(facturaModel);
-           //                 exchangeDb.SaveChanges();
+      //         using (var registrarCompra = exchangeDb.Database.BeginTransaction())
+      //         {
+      //             try
+      //             {
 
-           //                 foreach (var detalle in model.detalleFactura)
-           //                 {
-                                
-           //                     var dt = new DetalleFactura();
-           //                     dt.IdCriptomoneda = detalle.idCriptomoneda;
-           //                     dt.Precio =(decimal) detalle.precio;
-           //                     dt.Cantidad =(decimal) detalle.cantidad;
-           //                     dt.IdFactura = facturaModel.IdFactura;
-           //                     exchangeDb.DetalleFacturas.Add(dt);
-           //                     exchangeDb.SaveChanges();
-           //                 }
-                            
-           //                 registrarCompra.Commit();
-           //                 return Ok();
-           //             }
+      //                 Factura facturaModel = new Factura();
+      //                 facturaModel.IdUsuario = model.idUsuario;
+      //                 facturaModel.Fecha = DateTime.Now;
+      //                 exchangeDb.Facturas.Add(facturaModel);
+      //                 exchangeDb.SaveChanges();
 
-           //             catch (Exception e)
-           //             {
+      //                 foreach (var detalle in model.detalleFactura)
+      //                 {
 
-           //                 registrarCompra.Rollback();
-           //                 return BadRequest(e.Message);
-           //             }
+      //                     var dt = new DetalleFactura();
+      //                     dt.IdCriptomoneda = detalle.idCriptomoneda;
+      //                     dt.Precio =(decimal) detalle.precio;
+      //                     dt.Cantidad =(decimal) detalle.cantidad;
+      //                     dt.IdFactura = facturaModel.IdFactura;
+      //                     exchangeDb.DetalleFacturas.Add(dt);
+      //                     exchangeDb.SaveChanges();
+      //                 }
 
-           //         }
-                
-           // }
+      //                 registrarCompra.Commit();
+      //                 return Ok();
+      //             }
 
-           
-                return BadRequest();
-            
+      //             catch (Exception e)
+      //             {
 
-        }
+      //                 registrarCompra.Rollback();
+      //                 return BadRequest(e.Message);
+      //             }
+
+      //         }
+
+      // }
+
+
+
+
+
+    }
 
         // PUT api/<CompraController>/5
         [HttpPut("{id}")]

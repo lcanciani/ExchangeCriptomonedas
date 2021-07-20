@@ -2,11 +2,11 @@
 <div class="grid-dynamics">
 
 <div>
-<app-form-cripto></app-form-cripto>
+<app-form-cripto (listaCriptoActualizada)=actualizarLista($event) ></app-form-cripto>
 </div>
 
 <div>
-<app-lista-cripto></app-lista-cripto>
+<app-lista-cripto [listCriptomonedas] = "listaCripto"></app-lista-cripto>
 </div>
 </div>
 

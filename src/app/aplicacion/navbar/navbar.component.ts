@@ -15,4 +15,7 @@ export class NavbarComponent implements OnInit {
   irCompraVenta(){
     this._route.navigate(['compraVenta']);
   }
+  irCriptomonedas(){
+    this._route.navigate(['comp/editar'])
+  }
 }

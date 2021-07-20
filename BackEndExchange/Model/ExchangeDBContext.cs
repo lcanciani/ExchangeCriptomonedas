@@ -108,10 +108,6 @@ namespace BackEndExchange.Model
 
                 entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
 
-                entity.Property(e => e.SaldoFiat)
-                    .HasColumnType("decimal(18, 5)")
-                    .HasColumnName("saldoFiat");
-
                 entity.HasOne(d => d.IdCriptomonedaNavigation)
                     .WithMany(p => p.Billeteras)
                     .HasForeignKey(d => d.IdCriptomoneda)
@@ -199,13 +195,13 @@ namespace BackEndExchange.Model
                     .HasColumnType("decimal(18, 5)")
                     .HasColumnName("comision");
 
+                entity.Property(e => e.CotizacionDolar)
+                    .HasColumnType("decimal(18, 5)")
+                    .HasColumnName("cotizacionDolar");
+
                 entity.Property(e => e.IdCriptomoneda).HasColumnName("idCriptomoneda");
 
                 entity.Property(e => e.IdFactura).HasColumnName("idFactura");
-
-                entity.Property(e => e.MontoTotalOperacion)
-                    .HasColumnType("decimal(18, 5)")
-                    .HasColumnName("montoTotalOperacion");
 
                 entity.Property(e => e.PorcentajeGanancia)
                     .HasColumnType("decimal(18, 5)")
@@ -319,6 +315,10 @@ namespace BackEndExchange.Model
                     .HasMaxLength(50)
                     .HasColumnName("nombre")
                     .IsFixedLength(true);
+
+                entity.Property(e => e.SaldoFiatUsuario)
+                    .HasColumnType("decimal(18, 5)")
+                    .HasColumnName("saldoFiatUsuario");
             });
 
             OnModelCreatingPartial(modelBuilder);

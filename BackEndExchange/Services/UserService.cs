@@ -1,4 +1,4 @@
-﻿using BackEndExchange.Model;
+using BackEndExchange.Model;
 using BackEndExchange.Model.Request;
 using BackEndExchange.Model.Response;
 using System;
@@ -35,6 +35,7 @@ namespace BackEndExchange.Services
                 if (usuario == null) return null;
                 respuesta.email = usuario.Email;
                 respuesta.token = getToken(usuario);
+                respuesta.idUsuario = usuario.IdUsuario;
             }
 
             return respuesta;

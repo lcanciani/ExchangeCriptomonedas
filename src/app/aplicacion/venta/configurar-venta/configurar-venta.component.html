@@ -1,14 +1,16 @@
 <div>
-    <h2>Comprar {{criptomonedaNombre}}</h2>
+    <h2>Comprar {{datosVenta.nombreCriptomoneda}}</h2>
 
     <div>
-        <p>Ingrese el monto a comprar. Bienvenido a la LIBERTAD FINANCIERA!</p>
-        <input type="number" (input)="onSearchChange($event.target.value)">
+        <form action="" [formGroup]="formConfigurarVenta">
+        <p>Ingrese el monto a comprar.</p>
+        <input type="number" (input)="onSearchChange($event.target.value)" formControlName="monto">
         <hr>
-        <input type="number" value="{{cantidadCripto}}">
+        <input type="number" value="{{datosVenta.cantidad}}" formControlName="cantidad">
+    </form>
     </div>
     <div>
-        <p>Tené en cuenta que la compra de {{criptomonedaNombre}} tiene {{comision | percent}} de comisión.</p>
+        <p>Tené en cuenta que la compra de {{datosVenta.nombreCriptomoneda}} tiene {{datosVenta.comision | percent}} de comisión.</p>
 
     </div>
     <div>

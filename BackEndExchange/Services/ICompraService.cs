@@ -1,4 +1,5 @@
-﻿using BackEndExchange.Model.Request;
+using BackEndExchange.Model.PropositoGeneral;
+using BackEndExchange.Model.Request;
 
 
 namespace BackEndExchange.Services
@@ -6,7 +7,7 @@ namespace BackEndExchange.Services
     public interface ICompraService
     {
 
-        public void add(FacturaModel model);
+        public RespuestaModel add(ConfirmarCompraModel model);
 
         public string delete( FacturaModel model);
     }

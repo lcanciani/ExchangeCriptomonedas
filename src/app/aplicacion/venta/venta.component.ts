@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { CriptomonedaModel } from '../criptomonedas/criptomoneda.model';
 import { CriptomonedasService } from '../criptomonedas/criptomonedas.service';
+import { ConfirmarVentaModel } from './confirmar-venta/confirmarVenta.model';
 import { VentaService } from './venta.service';
 
 @Component({
@@ -14,6 +15,7 @@ export class VentaComponent implements OnInit {
 
   listaCriptomonedas:CriptomonedaModel[];
   criptomoneda: CriptomonedaModel;
+ 
   
   constructor(private _criptomonedasService: CriptomonedasService,
               private _route: Router,
@@ -27,6 +29,6 @@ export class VentaComponent implements OnInit {
   }
   configurarVenta(idCripto: number){
    this._ventaService.configurarVenta(idCripto);
-    
   }
+  
 }

@@ -1,10 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CriptomonedaModel } from './criptomoneda.model';
-import {CriptomonedasService} from './criptomonedas.service';
-import { FormGroup, FormControl, FormBuilder, Validators  } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatButtonModule } from '@angular/material/button';
-import {MatInputModule} from '@angular/material/input';
+import { Component} from '@angular/core';
+import{CriptomonedaModel} from './criptomoneda.model';
 
 @Component({
   selector: 'app-criptomonedas',
@@ -12,6 +7,12 @@ import {MatInputModule} from '@angular/material/input';
   styleUrls: ['./criptomonedas.component.css']
 })
 export class CriptomonedasComponent  {
+
+  listaCripto : CriptomonedaModel[];
+
+  actualizarLista(e){
+    this.listaCripto = e;
+  }
 
  /*  listCriptomonedas : CriptomonedaModel[] ;
   public columnas : string[] = ['id','nombre','accion'];

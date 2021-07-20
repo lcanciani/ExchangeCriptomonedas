@@ -14,8 +14,9 @@ import { ConfirmarVentaModel } from './confirmar-venta/confirmarVenta.model';
 })
 export class VentaService implements OnInit{
 private    _subjectCriptoVenta=new BehaviorSubject<Respuesta>({}as any);
+private    _subjectConfirmarVenta=new BehaviorSubject<ConfirmarVentaModel>({}as any);
 private _url: string = "https://localhost:44383/api/Compra";
-confirmarVentaMocel: ConfirmarVentaModel;
+private _confirmarVentaModel: ConfirmarVentaModel;
 constructor(private _criptoService:CriptomonedasService,
             private _http: HttpClient,
             private _route: Router){}
@@ -29,10 +30,13 @@ return this._http.get<Respuesta>(`${this._url}/${idCripto}`);
 }
 
 configurarVenta(idCripto: number){
+    console.log(idCripto)
     this.getCriptoVentaById(idCripto).subscribe(resp =>{
-        
+        console.log('service')
+        console.log(resp)
+
        this._subjectCriptoVenta.next(resp);
-       this._route.navigate(['configurarVenta']);
+       this._route.navigate(['/comp/configurarVenta']);
     })
     
 }
@@ -41,7 +45,23 @@ getCriptoAConfigurarVenta():Observable<Respuesta>{
     return this._subjectCriptoVenta.asObservable();
 
 }
+
+
+
+confirmarVenta(conf: ConfirmarVentaModel){
+    this._confirmarVentaModel = conf;
+    this._subjectConfirmarVenta.next(conf);
+       this._route.navigate(['/comp/ConfirmarVenta']);
+    
+}
+
+getConfirmarVenta():Observable<ConfirmarVentaModel>{
+    return this._subjectConfirmarVenta.asObservable();
+
+}
 insertarVenta():Observable<Respuesta>{
- return this._http.post<Respuesta>(`${this._url}`,this.confirmarVentaMocel);
+console.log('llegue VentaService.insertarVenta()')
+console.log(this._confirmarVentaModel)
+ return this._http.post<Respuesta>(`${this._url}`,this._confirmarVentaModel);
 }
 }

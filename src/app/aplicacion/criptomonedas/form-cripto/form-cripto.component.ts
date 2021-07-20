@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
 import { CriptomonedaModel } from '../criptomoneda.model';
 import {CriptomonedasService} from '../criptomonedas.service';
 import { FormGroup, FormControl, FormBuilder, Validators  } from '@angular/forms';
@@ -18,7 +18,8 @@ export class FormCriptoComponent implements OnInit, OnDestroy {
    _titulo: string = 'Agregar criptomoneda';
    _agregarEditarButton: string = 'Agregar';
  private id: number = 0;
- 
+ baja: boolean = false;
+ @Output() listaCriptoActualizada = new EventEmitter<CriptomonedaModel[]>();
   constructor(private criptomonedasService: CriptomonedasService,
               private formBuilder: FormBuilder,
               private snackBar: MatSnackBar) { }
@@ -27,7 +28,7 @@ export class FormCriptoComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.criptomonedasForm = this.formBuilder.group({
-       
+       idCriptomoneda:[{value:'', disabled: true}],
       nombre:[''], 
       precioCompra:[''],
      stockDisponible:[''], 
@@ -36,7 +37,7 @@ export class FormCriptoComponent implements OnInit, OnDestroy {
      stockTotal:[''],
       precioVenta :[''],
     imagenUrl: [''],
-    fechaBaja: ['']
+    fechaBaja: [{value:'', disabled: true} ]
     });
 
     this.subscription = this.criptomonedasService.editarCripto().subscribe(data => {
@@ -45,6 +46,7 @@ export class FormCriptoComponent implements OnInit, OnDestroy {
      
       
       this.criptomonedasForm.patchValue({
+        idCriptomoneda:this.criptomonedaModel.idCriptomoneda,
         nombre : this.criptomonedaModel.nombre,
         precioCompra: this.criptomonedaModel.precioCompra,
         stockDisponible: this.criptomonedaModel.stockDisponible,
@@ -54,6 +56,8 @@ export class FormCriptoComponent implements OnInit, OnDestroy {
         imagenUrl: this.criptomonedaModel.imagenUrl,
         fechaBaja: this.criptomonedaModel.fechaBaja
       });
+      
+      
       this.id = this.criptomonedaModel.idCriptomoneda;
       
       if(this.id !== undefined){
@@ -80,7 +84,8 @@ ngOnDestroy(){
     });
   }
   agregarEditar(){
-    if(this.id !== undefined){
+    console.log(this.id)
+    if(this.id === undefined){
       this.addCriptomoneda();
     }else{
       this.editCriptomoneda();
@@ -89,10 +94,17 @@ ngOnDestroy(){
 
 editCriptomoneda(){
   this.criptomonedasService.editarCriptomoneda(this.criptomonedasForm.value).subscribe(Response => {
+    this.listaCriptoActualizada.emit(Response.data);
     this.snackBar.open('Criptomoneda editada con éxito','',{
       duration: 2000
     });
   });
+}
+
+darDeAlta(){
+  this.criptomonedasForm.patchValue({
+    fechaBaja: null
+      });
 }
 
 }

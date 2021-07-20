@@ -1,7 +1,12 @@
 <div>
     <h2>{{_titulo}}</h2>
-    <form [formGroup]="criptomonedasForm" (ngSubmit)="addCriptomoneda()" >
+    <form [formGroup]="criptomonedasForm" (ngSubmit)="agregarEditar()" >
         
+        <div>
+            <mat-form-field>
+                <input type="text" placeholder="Id Criptomoneda" formControlName="idCriptomoneda" matInput>
+            </mat-form-field>
+        </div>
         <div>
             <mat-form-field>
                 <input type="text" placeholder="Nombre" formControlName="nombre" matInput>
@@ -41,19 +46,30 @@
         </div>
 
         
-
-        <p>
+<div class="grid">
+    <div>
+        <p >
+            
             <mat-form-field >
-              <mat-label>Date</mat-label>
-              <input matInput [matDatepicker]="dp3" disabled formControlName="fechaBaja">
+              <mat-label>Dar de baja</mat-label>
+              
+              
+                <input matInput [matDatepicker]="dp3"  formControlName="fechaBaja"  #fechaBaja>
+            
+            
               <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
               <mat-datepicker #dp3 disabled="false"></mat-datepicker>
             </mat-form-field>
+        
           </p>
-
-
+        </div>
+          <div *ngIf="fechaBaja.value!==''">
+            <button  type="button" (click)="darDeAlta()"  mat-raised-button color="primary" class="buttonAlta" >Limpiar fecha</button>
+        </div>
+    </div>
         <div>
             <button type="submit" mat-raised-button color="primary">{{_agregarEditarButton}}</button>
         </div>
+    
     </form>
 </div>

@@ -1,6 +1,15 @@
 
+.grid{
+display: grid;
+grid-template-columns: 2;
+grid-template-rows: 1;
+grid-auto-flow: column;
 
-
+}
+.buttonAlta{
+    width: 100%;
+    height: 60%;
+}
 mat-form-field{
     width: 100%;
 }

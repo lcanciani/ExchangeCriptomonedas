@@ -12,7 +12,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-
+import {MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({
@@ -32,6 +32,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatCardModule,
     MatIconModule,
     MatToolbarModule,
+    MatSelectModule
   ],
   exports:[
     MatTableModule,
@@ -47,6 +48,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatCardModule,
     MatIconModule,
     MatToolbarModule,
+    MatSelectModule
   ]
 })
 export class SharedModule { }

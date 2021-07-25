@@ -1,4 +1,4 @@
-﻿using BackEndExchange.Model;
+using BackEndExchange.Model;
 using BackEndExchange.Model.Request;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -48,10 +48,10 @@ namespace BackEndExchange.Controladores
 
         // GET api/<BilleterasController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public void Get(int id)
         {
-            return "value";
-        }
+      
+    }
 
         // POST api/<BilleterasController>
         [HttpPost]

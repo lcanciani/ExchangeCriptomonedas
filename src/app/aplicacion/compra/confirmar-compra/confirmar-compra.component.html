@@ -1,0 +1,30 @@
+<mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image">CT</div>
+      <mat-card-title>Finalizar Venta</mat-card-title>
+      <mat-card-subtitle>Graciaas</mat-card-subtitle>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <p>Criptomoneda: {{datosCompra.nombreCriptomoneda}}</p>
+      <p>Monto: {{datosCompra.monto}}</p>
+      <p>Cantidad: {{datosCompra.cantidad}}</p>
+      <p>Precio: {{datosCompra.precioCompra}}</p>
+      <p></p>
+       <!-- <input type="text" name="" id="" value="Criptomoneda"> 
+        <input type="text" name="" id="" value="Monto"> 
+        <input type="text" name="" id="" value="Cantidad"> 
+        <input type="text" name="" id="" value="Precio"> 
+        <input type="text" name="" id="" value="Comision"> 
+        -->
+      <p>
+        A purely peer-to-peer version of electronic cash would allow online
+payments to be sent directly from one party to another without going through a
+financial institution
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click)="registrarCompra()">VENDER</button>
+      <button mat-button>Cancelar</button>
+    </mat-card-actions>
+  </mat-card>

@@ -135,8 +135,9 @@ namespace BackEndExchange.Controladores
       RespuestaModel rm = new RespuestaModel();
       try
       {
-
+         
         Criptomoneda c = _ex.Criptomonedas.Find(model.IdCriptomoneda);
+        
         c.Nombre = model.Nombre;
         c.PrecioCompra = (decimal?)model.PrecioCompra;
         c.StockDisponible = (decimal?)model.StockDisponible;

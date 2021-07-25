@@ -1,4 +1,5 @@
 using BackEndExchange.Model;
+using BackEndExchange.Model.PropositoGeneral;
 using BackEndExchange.Model.Request;
 using BackEndExchange.Model.Response;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +27,7 @@ namespace BackEndExchange.Controladores
         [HttpGet]
         public IActionResult Get()
         {
+      RespuestaModel rm = new RespuestaModel();
             try {
                 List<BancoModel> banco = new List<BancoModel>(); ; 
             var bancos = _ex.Bancos.ToList();
@@ -41,11 +43,15 @@ namespace BackEndExchange.Controladores
                     bm.Telefono = ban.Telefono;
                     banco.Add(bm);
                 }
-            return Ok(banco);
+        rm.exito = 1;
+        rm.data = banco;
+            return Ok(rm);
             }
             catch(Exception e)
             {
-                return BadRequest(e.Message);
+        rm.exito = 0;
+        rm.mensanje = e.Message;
+                return BadRequest(rm);
             }
 
             }

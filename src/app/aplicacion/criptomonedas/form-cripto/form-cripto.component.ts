@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
 })
 export class FormCriptoComponent implements OnInit, OnDestroy {
   subscription : Subscription;
-  criptomonedaModel : CriptomonedaModel
+  criptomonedaModel : CriptomonedaModel = new CriptomonedaModel();
   public criptomonedasForm: FormGroup;
    _titulo: string = 'Agregar criptomoneda';
    _agregarEditarButton: string = 'Agregar';
@@ -41,6 +41,8 @@ export class FormCriptoComponent implements OnInit, OnDestroy {
     });
 
     this.subscription = this.criptomonedasService.editarCripto().subscribe(data => {
+      console.log('llegue al OnInit del form: '+ data)
+      
       this.criptomonedaModel = data;
       
      
@@ -57,7 +59,7 @@ export class FormCriptoComponent implements OnInit, OnDestroy {
         fechaBaja: this.criptomonedaModel.fechaBaja
       });
       
-      
+      console.log('idCripto: '+this.criptomonedaModel.idCriptomoneda )
       this.id = this.criptomonedaModel.idCriptomoneda;
       
       if(this.id !== undefined){
@@ -66,6 +68,11 @@ export class FormCriptoComponent implements OnInit, OnDestroy {
       this._titulo = "Editar criptomoneda";
       
       this._agregarEditarButton = "Editar";
+    }
+    else{
+      this._titulo = "Agregar criptomoneda";
+      
+      this._agregarEditarButton = "Agregar";
     }
     });
 
@@ -93,7 +100,20 @@ ngOnDestroy(){
   }
 
 editCriptomoneda(){
-  this.criptomonedasService.editarCriptomoneda(this.criptomonedasForm.value).subscribe(Response => {
+
+  
+  this.criptomonedaModel.idCriptomoneda = this.criptomonedasForm.get('idCriptomoneda').value;
+  this.criptomonedaModel.nombre = this.criptomonedasForm.get('nombre').value;
+  this.criptomonedaModel.precioCompra = this.criptomonedasForm.get('precioCompra').value;
+  this.criptomonedaModel.stockDisponible = this.criptomonedasForm.get('stockDisponible').value;
+  this.criptomonedaModel.simbolo = this.criptomonedasForm.get('simbolo').value;
+  this.criptomonedaModel.porcentajeGanancia = this.criptomonedasForm.get('porcentajeGanancia').value;
+  this.criptomonedaModel.stockTotal = this.criptomonedasForm.get('stockTotal').value;
+  this.criptomonedaModel.imagenUrl = this.criptomonedasForm.get('imagenUrl').value;
+  this.criptomonedaModel.fechaBaja = this.criptomonedasForm.get('fechaBaja').value;
+  const idCripto = this.criptomonedasForm.get('idCriptomoneda').value;
+  console.log('idCriptooo: '+this.criptomonedaModel.idCriptomoneda + 'pero mira:' + this.criptomonedasForm.get('idCriptomoneda').value) 
+  this.criptomonedasService.editarCriptomoneda(this.criptomonedaModel).subscribe(Response => {
     this.listaCriptoActualizada.emit(Response.data);
     this.snackBar.open('Criptomoneda editada con éxito','',{
       duration: 2000

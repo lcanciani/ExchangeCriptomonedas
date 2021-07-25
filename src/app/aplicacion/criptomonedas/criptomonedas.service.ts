@@ -1,8 +1,9 @@
 import { CriptomonedaModel } from "./criptomoneda.model"
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable, BehaviorSubject } from "rxjs";
+import { Observable, BehaviorSubject, observable } from "rxjs";
 import {Respuesta} from "src/app/modelosGral/respuesta.modelGral"
+import { filter } from "rxjs/operators";
 
 const httpOptions = {
     header: new HttpHeaders({

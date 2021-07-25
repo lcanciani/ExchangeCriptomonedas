@@ -1,0 +1,19 @@
+<div>
+    <h2>Vender {{datosCompra.nombreCriptomoneda}}</h2>
+
+    <div>
+        <form action="" [formGroup]="formConfigurarCompra">
+        <p>Ingrese la cantidad a vender.</p>
+        <input type="number" (input)="onSearchChange($event.target.value)" formControlName="cantidad">
+        <hr>
+        <input type="number" value="{{datosCompra.monto}}" formControlName="monto">
+    </form>
+    </div>
+    <div>
+        <p>Tené en cuenta que la venta de {{datosCompra.nombreCriptomoneda}} tiene {{datosCompra.comision | percent}} de comisión.</p>
+
+    </div>
+    <div>
+        <button (click)="confirmarCompra()">Confirmar venta</button>
+    </div>
+</div>

@@ -1,6 +1,7 @@
 
 <div>
     <h2>Agregar/Editar criptomonedas</h2>
+    <button (click)="restablecerForm()" mat-raised-button color="primary"> Agregar</button>
     <table mat-table [dataSource]="listCriptomonedas" class="mat-elevation-z4">
         <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef># </th>
@@ -25,4 +26,5 @@
         <tr mat-header-row *matHeaderRowDef="columnas"></tr>
         <tr mat-row *matRowDef="let row; columns:columnas"></tr>
     </table>
+   
 </div>

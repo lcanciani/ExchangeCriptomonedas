@@ -7,3 +7,7 @@
 .deslogear{
     grid-column: -2/-1;
 }
+
+mat-toolbar{
+    height: inherit;
+}

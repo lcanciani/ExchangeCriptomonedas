@@ -81,10 +81,10 @@ namespace BackEndExchange
                     ValidateAudience = false
                 };
             });
+      services.AddScoped<ICompraService, CompraService>();
+      services.AddScoped<IUserService, UserService>();
 
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<ICompraService, CompraService>();
-
+      services.AddScoped<IVentaService,VentaService>();
             //services.AddRazorPages();
             services.AddDbContext<ExchangeDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DevConecction")));
             //services.AddDbContext<ExchangeDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DevConecction")), ServiceLifetime.Singleton);

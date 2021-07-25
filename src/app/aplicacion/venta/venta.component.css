@@ -2,6 +2,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
     width: 100%;
+    gap: 20px;
 }
 .cripto{
     
@@ -12,9 +13,49 @@
    align-items: center;
     
 }
-
-.gridChild{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-
+label{
+    display: flex;
+    
+    
+    justify-content: center;
 }
+
+.nombreCripto{
+    display: flex;
+    /*justify-content: center;*/
+    
+    justify-content: center;
+}
+
+.card-payment {
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .5rem;
+    position: relative;
+    min-height: 130px;
+    box-shadow: 0 0.2rem 0.2rem rgb(0 0 0 / 3%);
+    transition: .2s ease-in-out;
+    transition-property: all;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+    transition-delay: 0s;
+}
+/*
+div{
+    transform: scale(1,1);
+    transition-timing-function: ease-out;
+    transition-duration: 200ms;
+    -moz-transform: scale(1,1);
+    -moz-transition-timing-function: ease-out;
+    -moz-transition-duration: 250ms;
+}
+div:hover{
+    transform: scale(1.12,1.12);
+    transition-timing-function: ease-out;
+    transition-duration: 100ms;
+    -moz-transform: scale(1.12,1.12);
+    -moz-transition-timing-function: ease-out;
+    -moz-transition-duration: 100ms;
+}
+
+*/

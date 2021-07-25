@@ -79,12 +79,13 @@ namespace BackEndExchange.HostedServices
 
         private decimal? getPrecioCriptomonedas()
         {
-      //var url = $"https://criptoya.com/api/argenbtc/btc/ars/1";
 
-      //var url = $"https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd";
-      var url = $"https://api.coingecko.com/api/v3/simple/price?ids=bitcoin%2Cethereum%2Cuniswap%2Ccardano&vs_currencies=usd%2Cusd%2Cusd%2Cusd";
+
+      //var url = $"https://api.coingecko.com/api/v3/simple/price?ids=bitcoin%2Cethereum%2Cuniswap%2Ccardano%2Cbinancecoin&vs_currencies=usd%2Cusd%2Cusd%2Cusd%2Cusd";
+      //probar
+      var url = $"https://api.coingecko.com/api/v3/simple/price?ids=bitcoin%2Cethereum%2Cuniswap%2Ccardano%2Cbinancecoin%2Csharering&vs_currencies=usd%2Cusd%2Cusd%2Cusd%2Cusd%2Cusd";
       var request = (HttpWebRequest)WebRequest.Create(url);
-      //request.ServerCertificateValidationCallback += request.ServerCertificateValidationCallback;
+      
       request.Method = "GET";
             request.ContentType = "application/json";
             request.Accept = "application/json";
@@ -107,6 +108,7 @@ namespace BackEndExchange.HostedServices
 
 
                   var cripto = _ex.Criptomonedas.Single(d => d.Nombre == item.Key);
+                  
                   cripto.PrecioCompra = item.Value.Value<decimal?>("usd");
                   _ex.Entry(cripto).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                   _ex.SaveChanges();

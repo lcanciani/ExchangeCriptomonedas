@@ -1,4 +1,4 @@
-export interface CriptomonedaModel{
+export class CriptomonedaModel{
 
       idCriptomoneda:number ; 
       nombre:string 

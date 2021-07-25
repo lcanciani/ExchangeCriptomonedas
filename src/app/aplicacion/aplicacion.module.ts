@@ -17,6 +17,14 @@ import {DeslogearComponent} from './deslogear/deslogear.component';
 import {ListaCriptoComponent} from './criptomonedas/lista-cripto/lista-cripto.component';
 //shared
 import {SharedModule} from '../shared/shared.module';
+import { DepositoComponent } from './deposito/deposito.component';
+import { DashboardService } from './dashboard/dashboard.service';
+import { BancosComponent } from './bancos/bancos.component';
+import { CompraComponent } from './compra/compra.component';
+import { ConfigurarCompraComponent } from './compra/configurar-compra/configurar-compra.component';
+import { ConfirmarCompraComponent } from './compra/confirmar-compra/confirmar-compra.component';
+import { ExtraccionComponent } from './extraccion/extraccion.component';
+import { ExtraccionService } from './extraccion/extraccion.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +38,13 @@ import {SharedModule} from '../shared/shared.module';
     FormCriptoComponent,
     ListaCriptoComponent,
     DashboardComponent,
-    UsuarioComponent
+    UsuarioComponent,
+    DepositoComponent,
+    BancosComponent,
+    CompraComponent,
+    ConfigurarCompraComponent,
+    ConfirmarCompraComponent,
+    ExtraccionComponent
   ],
   imports: [
     CommonModule,
@@ -51,6 +65,6 @@ import {SharedModule} from '../shared/shared.module';
     DashboardComponent,
     UsuarioComponent
   ],
-  providers: [CriptomonedasService,VentaService]
+  providers: [CriptomonedasService,VentaService,DashboardService,ExtraccionService]
 })
 export class AplicacionModule { }

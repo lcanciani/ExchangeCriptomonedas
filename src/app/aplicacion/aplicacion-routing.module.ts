@@ -6,6 +6,10 @@ import {CriptomonedasComponent} from './criptomonedas/criptomonedas.component';
 import { ConfigurarVentaComponent } from './venta/configurar-venta/configurar-venta.component';
 import {AuthGuard} from './login/auth.guard';
 import { ConfirmarVentaComponent } from './venta/confirmar-venta/confirmar-venta.component';
+import { DepositoComponent } from './deposito/deposito.component';
+import { ConfirmarCompraComponent } from './compra/confirmar-compra/confirmar-compra.component';
+import { ConfigurarCompraComponent } from './compra/configurar-compra/configurar-compra.component';
+import { CompraComponent } from './compra/compra.component';
 
 const routes: Routes = [
   {path: '',  canActivate:[AuthGuard] ,children:[
@@ -13,6 +17,13 @@ const routes: Routes = [
     {path: 'venta', component: VentaComponent},
     {path: 'configurarVenta', component: ConfigurarVentaComponent},
     {path: 'confirmarVenta', component: ConfirmarVentaComponent},
+
+    {path: 'compra', component: CompraComponent},
+    {path: 'configurarCompra', component: ConfigurarCompraComponent},
+    {path: 'confirmarCompra', component: ConfirmarCompraComponent},
+
+
+    {path: 'deposito', component: DepositoComponent},
     {path: 'editar', component:CriptomonedasComponent},
     {path: 'dashboard', component: DashboardComponent },
     {path: '**', component: DashboardComponent }

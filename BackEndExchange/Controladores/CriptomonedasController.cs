@@ -2,6 +2,7 @@ using BackEndExchange.Model;
 using BackEndExchange.Model.PropositoGeneral;
 using BackEndExchange.Model.Request;
 using BackEndExchange.Model.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace BackEndExchange.Controladores
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CriptomonedasController : ControllerBase
     {
         private ExchangeDBContext _ex;

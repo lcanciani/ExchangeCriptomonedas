@@ -12,6 +12,9 @@
             <label for="" style="width: 90%;">{{item.nombre}}</label>
         </div>
         <div>
+            <label for="" style="width: 90%;">{{item.precioCompra | currency}} usd</label>
+        </div>
+        <div>
         <button  style="margin: 10px; width: 90%; cursor: pointer;"  
         mat-raised-button color="primary"
         (click)="configurarVenta(item.idCriptomoneda)">comprar</button>

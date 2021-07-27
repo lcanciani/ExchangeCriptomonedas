@@ -9,6 +9,7 @@ namespace BackEndExchange.Model
     {
         public Usuario()
         {
+            BancosUsuarios = new HashSet<BancosUsuario>();
             Billeteras = new HashSet<Billetera>();
             Facturas = new HashSet<Factura>();
         }
@@ -23,6 +24,7 @@ namespace BackEndExchange.Model
         public string Dni { get; set; }
         public decimal? SaldoFiatUsuario { get; set; }
 
+        public virtual ICollection<BancosUsuario> BancosUsuarios { get; set; }
         public virtual ICollection<Billetera> Billeteras { get; set; }
         public virtual ICollection<Factura> Facturas { get; set; }
     }

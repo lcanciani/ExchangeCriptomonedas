@@ -1,19 +1,48 @@
-<div>
+
+<div class="grid">
+<div class="mat-elevation-z4 " style="margin: 10px;">
+    <div style="margin: 10px;">
     <h2>Comprar {{datosVenta.nombreCriptomoneda}}</h2>
 
     <div>
         <form action="" [formGroup]="formConfigurarVenta">
-        <p>Ingrese el monto a comprar.</p>
-        <input type="number" (input)="onSearchChange($event.target.value)" formControlName="monto">
+        <p>Ingrese el monto a comprar en pesos argentinos.</p>
+        <div class="flex">
+            <div>
+            <mat-form-field  floatLabel="always">
+                <mat-label>Monto</mat-label>
+                <input required matInput type="number" class="example-right-align" placeholder="0"
+                formControlName="monto" (input)="onSearchChange($event.target.value)"
+                >
+                <span matPrefix>$&nbsp;</span>
+                
+              </mat-form-field>
+            </div>
+        </div>
+        <!--<input type="number" (input)="onSearchChange($event.target.value)" formControlName="monto">-->
         <hr>
-        <input type="number" value="{{datosVenta.cantidad}}" formControlName="cantidad">
-    </form>
+        <div class="flex">
+        <label for="">Cantidad:</label>
+    </div>
+        <div class="flex">
+            
+        <mat-form-field  >
+            <input  matInput type="number" value="{{datosVenta.cantidad}}" formControlName="cantidad">
+        </mat-form-field>
+        
+    </div>
+        </form>
+
     </div>
     <div>
         <p>Tené en cuenta que la compra de {{datosVenta.nombreCriptomoneda}} tiene {{datosVenta.comision | percent}} de comisión.</p>
 
     </div>
-    <div>
-        <button (click)="confirmarVenta()">Confirmar compra</button>
+    <div class="flex">
+        <button [disabled]="!formConfigurarVenta.valid" mat-raised-button color="primary"  (click)="confirmarVenta()">Confirmar compra</button>
     </div>
+
+
+</div>
+</div>
 </div>

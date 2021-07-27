@@ -25,6 +25,8 @@ import { ConfigurarCompraComponent } from './compra/configurar-compra/configurar
 import { ConfirmarCompraComponent } from './compra/confirmar-compra/confirmar-compra.component';
 import { ExtraccionComponent } from './extraccion/extraccion.component';
 import { ExtraccionService } from './extraccion/extraccion.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import {JwtInterceptors} from './security/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,8 @@ import { ExtraccionService } from './extraccion/extraccion.service';
     DashboardComponent,
     UsuarioComponent
   ],
-  providers: [CriptomonedasService,VentaService,DashboardService,ExtraccionService]
+  providers: [CriptomonedasService,VentaService,DashboardService,ExtraccionService,{
+    provide: HTTP_INTERCEPTORS, useClass: JwtInterceptors, multi: true
+  }]
 })
 export class AplicacionModule { }

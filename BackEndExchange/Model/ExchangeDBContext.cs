@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -18,10 +18,12 @@ namespace BackEndExchange.Model
         }
 
         public virtual DbSet<Banco> Bancos { get; set; }
+        public virtual DbSet<BancosUsuario> BancosUsuarios { get; set; }
         public virtual DbSet<Billetera> Billeteras { get; set; }
         public virtual DbSet<Cotizacion> Cotizacions { get; set; }
         public virtual DbSet<Criptomoneda> Criptomonedas { get; set; }
         public virtual DbSet<DetalleFactura> DetalleFacturas { get; set; }
+        public virtual DbSet<Error> Errors { get; set; }
         public virtual DbSet<Factura> Facturas { get; set; }
         public virtual DbSet<TiposMovimiento> TiposMovimientos { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
@@ -73,6 +75,34 @@ namespace BackEndExchange.Model
                     .HasMaxLength(30)
                     .HasColumnName("telefono")
                     .IsFixedLength(true);
+            });
+
+            modelBuilder.Entity<BancosUsuario>(entity =>
+            {
+                entity.HasKey(e => e.IdBancoUsuario);
+
+                entity.ToTable("BancosUsuario");
+
+                entity.Property(e => e.IdBancoUsuario).HasColumnName("idBancoUsuario");
+
+                entity.Property(e => e.Cbu)
+                    .HasMaxLength(50)
+                    .HasColumnName("cbu")
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.IdBanco).HasColumnName("idBanco");
+
+                entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
+
+                entity.HasOne(d => d.IdBancoNavigation)
+                    .WithMany(p => p.BancosUsuarios)
+                    .HasForeignKey(d => d.IdBanco)
+                    .HasConstraintName("FK_BancosUsuario_Bancos");
+
+                entity.HasOne(d => d.IdUsuarioNavigation)
+                    .WithMany(p => p.BancosUsuarios)
+                    .HasForeignKey(d => d.IdUsuario)
+                    .HasConstraintName("FK_BancosUsuario_Usuarios");
             });
 
             modelBuilder.Entity<Billetera>(entity =>
@@ -226,6 +256,17 @@ namespace BackEndExchange.Model
                     .HasConstraintName("FK_DetalleFactura_Facturas");
             });
 
+            modelBuilder.Entity<Error>(entity =>
+            {
+                entity.HasKey(e => e.IdError);
+
+                entity.ToTable("Error");
+
+                entity.Property(e => e.IdError).HasColumnName("idError");
+
+                entity.Property(e => e.PrecioErrorStatus).HasColumnName("precioErrorStatus");
+            });
+
             modelBuilder.Entity<Factura>(entity =>
             {
                 entity.HasKey(e => e.IdFactura);
@@ -245,7 +286,7 @@ namespace BackEndExchange.Model
                 entity.HasOne(d => d.IdBancoNavigation)
                     .WithMany(p => p.Facturas)
                     .HasForeignKey(d => d.IdBanco)
-                    .HasConstraintName("FK_Facturas_Bancos");
+                    .HasConstraintName("FK_Facturas_BancosUsuario");
 
                 entity.HasOne(d => d.IdTipoMovimientoNavigation)
                     .WithMany(p => p.Facturas)

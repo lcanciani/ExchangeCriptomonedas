@@ -10,6 +10,7 @@ import { DepositoComponent } from './deposito/deposito.component';
 import { ConfirmarCompraComponent } from './compra/confirmar-compra/confirmar-compra.component';
 import { ConfigurarCompraComponent } from './compra/configurar-compra/configurar-compra.component';
 import { CompraComponent } from './compra/compra.component';
+import { ExtraccionComponent } from './extraccion/extraccion.component';
 
 const routes: Routes = [
   {path: '',  canActivate:[AuthGuard] ,children:[
@@ -22,7 +23,7 @@ const routes: Routes = [
     {path: 'configurarCompra', component: ConfigurarCompraComponent},
     {path: 'confirmarCompra', component: ConfirmarCompraComponent},
 
-
+    {path: 'extraccion', component: ExtraccionComponent},
     {path: 'deposito', component: DepositoComponent},
     {path: 'editar', component:CriptomonedasComponent},
     {path: 'dashboard', component: DashboardComponent },

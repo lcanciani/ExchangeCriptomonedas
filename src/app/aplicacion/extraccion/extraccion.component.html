@@ -1,1 +1,45 @@
-<p>extraccion works!</p>
+<div class="grid "> 
+    <div class="mat-elevation-z4 " style="margin: 10px;">
+        <div style="margin: 10px;">
+<h3>Extracciones!</h3>
+<p>Ingrese el monto a extraer</p> <p>Saldo disponible: {{saldoUsuario | currency}} pesos argentinos.</p>
+<form action="" [formGroup]="formExtraccion" (ngSubmit)="registrarExtraccion()">
+
+    <div class="flex">
+        <div>
+        <mat-form-field  floatLabel="always">
+            <mat-label>Monto</mat-label>
+            <input required matInput type="number" class="example-right-align" placeholder="0"
+            formControlName="montoExtraccion" (input)="onSearchChange($event.target.value)"
+            >
+            <span matPrefix>$&nbsp;</span>
+            
+          </mat-form-field>
+        </div>
+   <!-- <input  name="inputMontoExtraccion" type="number" formControlName="montoExtraccion" (input)="onSearchChange($event.target.value)">-->
+    <label style="color: red;" for="inputMontoExtraccion" *ngIf="!validarMonto">Su saldo es insuficiente</label>
+</div>
+<p>Seleccione el CBU y la entidad con la que va a realizar la extracción</p>
+<div class="flex">
+<mat-form-field class="boton">
+    <mat-label>Bancos</mat-label>
+    <select matNativeControl required formControlName="bancoUsuario" >
+      
+      <option *ngFor="let item of listBancosUsuario" [ngValue]="item.idBancoUsuario">{{item.razonSocial}} CBU: {{item.cbu}}</option>
+    
+    </select>
+  </mat-form-field>
+</div>
+<div>
+  <p>Recuerde que las extracciones tienen una comision de {{comision * 100}}%.</p>
+</div>
+
+<div>
+  <!--ley de morgan: -(a * b) = -a + -b -->
+  <button [disabled]=" !formExtraccion.valid || !validarMonto"  type="submit" value="Realizar Extraccion" mat-raised-button color="primary">Realizar Extraccion</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+

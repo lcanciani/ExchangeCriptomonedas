@@ -5,8 +5,13 @@ import { Observable, BehaviorSubject, observable } from "rxjs";
 import {Respuesta} from "src/app/modelosGral/respuesta.modelGral"
 import { filter } from "rxjs/operators";
 
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwiZW1haWwiOi"+
+"JmZXJjYW5jaWFuaUBnbWFpbC5jb20gICAgICAgICAgICAgICAgICAgICAgICAgICA"+
+"gICIsIm5iZiI6MTYyNzMxOTAxNywiZXhwIjoxNjMyNTAzMDE3LCJpYXQiOjE2Mjcz"+
+" MTkwMTd9.zCMBDBsGNyyVia1QCxvFugrQyGFD1Owt8Z3Er3DFphQ";
+
 const httpOptions = {
-    header: new HttpHeaders({
+    headers: new HttpHeaders({
         'Contend-Type': 'application/json'
     })
 };
@@ -18,6 +23,8 @@ const httpOptions = {
 export class CriptomonedasService {
     listCriptomonedas:CriptomonedaModel[];
     url:string ="https://localhost:44383/api/Criptomonedas";
+
+                       
     private criptoModel:CriptomonedaModel ;
     private _editarCriptomoneda = new BehaviorSubject<CriptomonedaModel>({}as any);
 
@@ -29,7 +36,7 @@ export class CriptomonedasService {
     }
 
     getCriptomonedas(): Observable<Respuesta>{
-        return this._http.get<Respuesta>(this.url);
+        return this._http.get<Respuesta>(`${this.url}`, httpOptions);
     }
     getCriptomonedaById(id: number):Observable<Respuesta>{
         

@@ -4,13 +4,18 @@
     <button mat-raised-button color="primary" routerLink="/comp/deposito">
         Cargar fondos
     </button>
+    <span style="margin: 5px;"></span>
+    <button mat-raised-button color="primary" routerLink="/comp/extraccion">
+        Extraer fondos
+    </button>
 </div>
 
 <div>
-    <label for="">Saldo: {{saldo}}</label>
+    <label for="">Saldo: {{saldo | currency}} pesos argentinos.</label>
 </div>
 
 <div>
+    <hr>
 <label for="">Billetera cripto:</label>
 </div>
 <table mat-table [dataSource]="listCriptosUsuario" class="mat-elevation-z4">

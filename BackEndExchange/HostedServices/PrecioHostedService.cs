@@ -34,37 +34,32 @@ namespace BackEndExchange.HostedServices
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("Timed Hosted Service running.");
+      if(getPrecioCriptomonedas() == null)
+      {
+        using (var _ex = new ExchangeDBContext())
+        {
+          var error = _ex.Errors.Where(e => e.IdError == 1).FirstOrDefault();
+          error.PrecioErrorStatus = 1;
+          _ex.Entry(error).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+          _ex.SaveChanges();
+          return Task.CompletedTask;
+        }
+      }
       
-            _timer = new Timer(DoWork, null, TimeSpan.Zero,
+        _timer = new Timer(DoWork, null, TimeSpan.Zero,
                 TimeSpan.FromSeconds(10
                 ));
 
-            return Task.CompletedTask;
+        return Task.CompletedTask;
+      
+      
+            
         }
         private void DoWork(object state)
         {
 
       getPrecioCriptomonedas();
-      //Console.Write("llegue al doWork");
-      //using (var _ex = new ExchangeDBContext()){
-
-      //  var cripto = _ex.Criptomonedas.Single(d => d.Nombre == "");
-      //  _ex.Entry(cripto).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-
-      //  decimal? precioBitcon = getPrecioBitconPesos();
-      //      if ( precioBitcon != null)
-      //      {
-      //          Criptomoneda p = new Criptomoneda();
-      //          p.IdCriptomoneda = 1;
-      //          p = _ex.Criptomonedas.Find(p.IdCriptomoneda);
-      //          p.PrecioCompra = precioBitcon;
-      //    _ex.Entry(p).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-
-      //    //_ex.Criptomonedas.Update(p);
-      //    _ex.SaveChanges();
-
-      //      }
-      //      }
+     
     }
 
         public Task StopAsync(CancellationToken cancellationToken)
@@ -79,11 +74,19 @@ namespace BackEndExchange.HostedServices
 
         private decimal? getPrecioCriptomonedas()
         {
+      using (var _ex = new ExchangeDBContext())
+      {
+        Error error = new Error();
+         error = _ex.Errors.Where(e => e.IdError == 1).FirstOrDefault();
+        error.PrecioErrorStatus = 0;
+        _ex.Entry(error).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        _ex.SaveChanges();
+      }
 
-
-      //var url = $"https://api.coingecko.com/api/v3/simple/price?ids=bitcoin%2Cethereum%2Cuniswap%2Ccardano%2Cbinancecoin&vs_currencies=usd%2Cusd%2Cusd%2Cusd%2Cusd";
+        var urlMala = $"https://api.coingecko.com/api/v3/simple/price?ids=bitcoin%2Cethereum%2Cuniswap%2Ccardano%2Cbinancecoinvs_currencies=usd%2Cusd%2Cusd%2Cusd%2Cusd";
       //probar
       var url = $"https://api.coingecko.com/api/v3/simple/price?ids=bitcoin%2Cethereum%2Cuniswap%2Ccardano%2Cbinancecoin%2Csharering&vs_currencies=usd%2Cusd%2Cusd%2Cusd%2Cusd%2Cusd";
+      
       var request = (HttpWebRequest)WebRequest.Create(url);
       
       request.Method = "GET";
@@ -93,7 +96,8 @@ namespace BackEndExchange.HostedServices
             {
                 using (WebResponse response = request.GetResponse())
                 {
-                    using (Stream strReader = response.GetResponseStream())
+          
+          using (Stream strReader = response.GetResponseStream())
                     {
                         if (strReader == null) return null ;
                         using (StreamReader objReader = new StreamReader(strReader))
@@ -102,61 +106,49 @@ namespace BackEndExchange.HostedServices
               JObject json = JObject.Parse(responseBody);
               using (var _ex = new ExchangeDBContext())
               {
+                
                 foreach (var item in json)
                 {
 
-
-
                   var cripto = _ex.Criptomonedas.Single(d => d.Nombre == item.Key);
-                  
-                  cripto.PrecioCompra = item.Value.Value<decimal?>("usd");
-                  _ex.Entry(cripto).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                  _ex.SaveChanges();
+                  if(calcularRango((decimal)cripto.PrecioCompra, (decimal)item.Value.Value<decimal?>("usd")) == 1)
+                  {
+                    cripto.PrecioCompra = item.Value.Value<decimal?>("usd");
+
+                    _ex.Entry(cripto).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    _ex.SaveChanges();
+                  }
+                  else
+                  {
+                    return 0;
+                  }
 
                   
 
                 }
-              }
-                            //try 
-                            //{ 
-                            
-                            //    return 1;
-                            //}
-                            //catch (Exception)
-                            //{
-                            //    return null;
-                            //}
-                            //u.Email = precio;
-
-                            //_ex.Usuarios.Update(u);
-                            //_ex.SaveChanges();
-
-                            
+              }   
                         }
 
                     }
                 }
         return 1;
             }
-            catch (WebException )
+            catch (Exception )
             {
                 return null;
             }
         }
-        /*
-        private string GetConnectionString()
-        {
-            var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json");
 
-            config = builder.Build();
-
-            return config.GetConnectionString("DefaultConnection");
-
-        }
-        */
-
+    private int calcularRango(decimal precioAnterior, decimal precioActual)
+    {
+      double precioActualAlto = (double)precioActual * 1.3;
+      double precioActualBajo = (double)precioActual * 0.7;
+      if( (double)precioAnterior>precioActualBajo && (double)precioAnterior < precioActualAlto)
+      {
+        return 1;
+      }
+      return 0;
+    }
     }
 
 

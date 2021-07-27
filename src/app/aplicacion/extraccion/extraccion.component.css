@@ -1,0 +1,12 @@
+.grid{
+    display: grid;
+    justify-content: center;
+}
+.flex{
+    display: flex;
+    justify-content: center;
+}
+
+.boton{
+    width: 70%;
+}

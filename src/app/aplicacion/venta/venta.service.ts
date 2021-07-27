@@ -16,6 +16,7 @@ export class VentaService implements OnInit{
 private    _subjectCriptoVenta=new BehaviorSubject<Respuesta>({}as any);
 private    _subjectConfirmarVenta=new BehaviorSubject<ConfirmarVentaModel>({}as any);
 private _url: string = "https://localhost:44383/api/Compra";
+private _urlError: string = "https://localhost:44383/api/Error";
 private _confirmarVentaModel: ConfirmarVentaModel;
 constructor(private _criptoService:CriptomonedasService,
             private _http: HttpClient,
@@ -64,4 +65,9 @@ console.log('llegue VentaService.insertarVenta()')
 console.log(this._confirmarVentaModel)
  return this._http.post<Respuesta>(`${this._url}`,this._confirmarVentaModel);
 }
+
+estadoPrecioCompra(): Observable<Respuesta>{
+    return this._http.get<Respuesta>(`${this._urlError}`)
+}
+
 }

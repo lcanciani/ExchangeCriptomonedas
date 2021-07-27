@@ -20,7 +20,8 @@ namespace BackEndExchange.Services
       RespuestaModel rm = new RespuestaModel();
       using (var exchangeDb = new ExchangeDBContext())
       {
-        double totalFactura = model.PrecioVenta + model.PrecioVenta * (model.Comision + 1);
+        double totalFactura = model.Monto;
+        
 
 
         using (var registrarCompra = exchangeDb.Database.BeginTransaction())
@@ -36,7 +37,7 @@ namespace BackEndExchange.Services
 
               usuario.SaldoFiatUsuario = usuario.SaldoFiatUsuario - (decimal)totalFactura;
               exchangeDb.Entry<Usuario>(usuario).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-              Console.WriteLine("AAAAAAAAAA0");
+              
               exchangeDb.SaveChanges();
               double precioCompra = 0;
 
@@ -47,7 +48,7 @@ namespace BackEndExchange.Services
               fm.IdTipoMovimiento = model.IdTipoMovimiento;
               fm.IdBanco = null;
               exchangeDb.Facturas.Add(fm);
-              Console.WriteLine("AAAAAAAAAA1");
+              
               exchangeDb.SaveChanges();
 
               dfm.IdCriptomoneda = model.IdCriptomoneda;
@@ -61,7 +62,7 @@ namespace BackEndExchange.Services
               dfm.Comision = (decimal?)model.Comision;
               dfm.PorcentajeGanancia = (decimal?)model.PorcentajeGanancia;
               exchangeDb.DetalleFacturas.Add(dfm);
-              Console.WriteLine("AAAAAAAAAA2");
+              
               exchangeDb.SaveChanges();
 
              
@@ -71,7 +72,7 @@ namespace BackEndExchange.Services
 
                 d.IdUsuario == model.IdUsuario && d.IdCriptomoneda == model.IdCriptomoneda
               ).FirstOrDefault();
-              Console.WriteLine("AAAAAAAAAA2: "+ billetera);
+              
               if (billetera != null)
               {
                 Billetera b2 = new Billetera();
@@ -86,7 +87,7 @@ namespace BackEndExchange.Services
                 //exchangeDb.Billeteras.Update(Billetera);
                 exchangeDb.Entry(billetera).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 exchangeDb.SaveChanges();
-                Console.WriteLine("AAAAAAAAAA4");
+                
               }
 
               else { 
@@ -102,7 +103,7 @@ namespace BackEndExchange.Services
                 Billetera.ClavePrivada = null;
                 Billetera.ClavePublica = null;
                 exchangeDb.Billeteras.Add(Billetera);
-                Console.WriteLine("AAAAAAAAAA3");
+               
                 exchangeDb.SaveChanges();
               }
               exchangeDb.SaveChanges();

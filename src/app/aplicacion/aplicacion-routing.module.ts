@@ -11,6 +11,9 @@ import { ConfirmarCompraComponent } from './compra/confirmar-compra/confirmar-co
 import { ConfigurarCompraComponent } from './compra/configurar-compra/configurar-compra.component';
 import { CompraComponent } from './compra/compra.component';
 import { ExtraccionComponent } from './extraccion/extraccion.component';
+import { MailComponent } from './mail/mail.component';
+import { EstadisticasComponent } from './estadisticas/estadisticas.component';
+import { RegistrarUsuarioComponent } from './usuario/registrar-usuario/registrar-usuario.component';
 
 const routes: Routes = [
   {path: '',  canActivate:[AuthGuard] ,children:[
@@ -22,6 +25,10 @@ const routes: Routes = [
     {path: 'compra', component: CompraComponent},
     {path: 'configurarCompra', component: ConfigurarCompraComponent},
     {path: 'confirmarCompra', component: ConfirmarCompraComponent},
+
+    {path: 'enviarMail', component: MailComponent},
+    {path: 'estadisticas', component: EstadisticasComponent},
+    
 
     {path: 'extraccion', component: ExtraccionComponent},
     {path: 'deposito', component: DepositoComponent},

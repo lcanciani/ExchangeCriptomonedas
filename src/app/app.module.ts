@@ -33,6 +33,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { AplicacionModule } from './aplicacion/aplicacion.module';
 import { SharedModule } from './shared/shared.module';
+import { RegistrarUsuarioComponent } from './aplicacion/usuario/registrar-usuario/registrar-usuario.component';
 
 
 @NgModule({
@@ -44,7 +45,7 @@ import { SharedModule } from './shared/shared.module';
     AplicacionComponent,
     
     LoginComponent,
-    
+    RegistrarUsuarioComponent
     
   ],
   imports: [

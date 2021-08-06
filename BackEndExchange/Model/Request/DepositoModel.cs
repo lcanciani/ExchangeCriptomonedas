@@ -9,7 +9,7 @@ namespace BackEndExchange.Model.Request
   {
     public int IdUsuario { get; set; }
     public decimal? Monto { get; set; }
-    public int IdBanco { get; set; }
+    public int? IdBanco { get; set; }
     public int IdTipoMovimiento { get; set; }
     public decimal? comision { get; set; }
   }

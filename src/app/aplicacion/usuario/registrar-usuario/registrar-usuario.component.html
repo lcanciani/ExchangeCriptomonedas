@@ -1,0 +1,95 @@
+<div class="conteiner">
+<div  class="mat-elevation-z4 " style="margin: 10px;">
+<div style="margin: 15px;" >
+    <h2>Registrarse</h2>
+    <p>Aqui podras registrarte en CriptoTrust y comenzar a comercializar con criptomonedas</p>
+    <form action="" [formGroup]="registrarUsuarioForm" (ngSubmit)="registrarUsuario()" autocomplete="off">
+
+        <div>
+            <mat-form-field class="inputs">
+                <input autocomplete="off" required matInput placeholder="Nombre" type="text" formControlName="nombre">
+            </mat-form-field>
+        </div>
+       
+        <div>
+            <mat-form-field class="inputs">
+                <input autocomplete="off" required type="text" placeholder="Apellido" formControlName="apellido" matInput>
+            </mat-form-field>
+        </div>
+
+
+        <div>
+            <mat-form-field class="inputs">
+                <input autocomplete="off" required type="text" placeholder="Direccion" formControlName="direccion" matInput>
+            </mat-form-field>
+        </div>
+
+
+        <div>
+            <mat-form-field class="inputs">
+                <input autocomplete="off" required type="text" placeholder="Email" formControlName="email" matInput>
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field class="inputs">
+                <input autocomplete="off" required type="password" placeholder="Contraseña" formControlName="password" matInput>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field class="inputs">
+                <input autocomplete="off" required type="number" placeholder="DNI" formControlName="dni" matInput>
+            </mat-form-field>
+        </div>
+
+        <mat-form-field class="example-chip-list inputs" appearance="fill" >
+            <mat-label>Banco y CBU</mat-label>
+            <mat-chip-list #chipList aria-label="Fruit selection"  required>
+              <mat-chip *ngFor="let item of bancosCbus" [selectable]="selectable"
+                       [removable]="removable" (removed)="remove(item)">
+                {{item.banco}} {{item.cbu}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+             
+            </mat-chip-list>
+            
+          </mat-form-field>
+
+
+        <form action=""  [formGroup]="registrarCbuBancoFrom">
+        <hr>
+        <h3>Ingrese el banco y cbu al cual va a recibir las extracciones</h3>
+        
+       
+          <mat-form-field  class="inputs">
+            <mat-label>Bancos</mat-label>
+            <select matNativeControl required formControlName="banco" #banco  required>
+              
+              <option  *ngFor="let item of listBancos"  [ngValue]="item">{{item.razonSocial}}</option>
+            
+            </select>
+          </mat-form-field>
+          
+        
+        <!---->
+          <div>
+            <mat-form-field class="inputs">
+                <input autocomplete="off" #cbu type="number"  (input)="onSearchChange($event.target.value)" placeholder="CBU al que va a extraer los fondos" formControlName="cbu" matInput>
+            </mat-form-field>
+        </div>
+             <!--[disabled]="!registrarCbuBancoFrom.valid || false "-->
+        <button  [disabled]="!registrarCbuBancoFrom.valid || estado " mat-raised-button color="succes" type="button" (click)="agregar(cbu.value)" >Agregar</button>
+        <hr>
+    </form>
+        <div >
+            
+            <button [disabled]="!registrarUsuarioForm.valid || estadoRegistrar" mat-raised-button color="succes" type="submit"  >Registrar usuario</button>
+            <p>¿Ya tienes cuenta?</p>
+            <button type="button" routerLink="/comp"  mat-raised-button color="succes">Iniciar seción</button>
+        </div>
+
+    </form>
+
+</div>
+</div>
+</div>

@@ -48,7 +48,7 @@ namespace BackEndExchange.Controladores
             exchangeDb.SaveChanges();
 
             Factura f = new Factura();
-            f.IdBanco = model.IdBanco;
+            f.IdBanco = null;
             f.IdTipoMovimiento = model.IdTipoMovimiento;
             f.Fecha = DateTime.Now;
             f.IdUsuario = model.IdUsuario;

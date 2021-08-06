@@ -44,12 +44,12 @@ namespace BackEndExchange.Controladores
         CriptomonedaModel cm = new CriptomonedaModel();
         cm.IdCriptomoneda = c.IdCriptomoneda;
         cm.Nombre = c.Nombre.Trim();
-        cm.PrecioCompra = (double)c.PrecioCompra;
-        cm.StockDisponible = (double)c.StockDisponible;
+        cm.PrecioCompra = (decimal)c.PrecioCompra;
+        cm.StockDisponible = (decimal)c.StockDisponible;
         cm.Simbolo = c.Simbolo.Trim();
-        cm.StockTotal = (double)c.StockTotal;
+        cm.StockTotal = (decimal)c.StockTotal;
         cm.ImagenUrl = c.ImagenUrl.Trim();
-        cm.PorcentajeGanancia = (double)c.PorcentajeGanancia;
+        cm.PorcentajeGanancia = (decimal)c.PorcentajeGanancia;
 
         TipoMovimientoModel tmm = new TipoMovimientoModel();
         tmm.IdTiposMovimiento = movimiento.IdTiposMovimiento;
@@ -63,7 +63,7 @@ namespace BackEndExchange.Controladores
         ccm.IdCriptomoneda = cm.IdCriptomoneda;
         ccm.NombreCriptomoneda = cm.Nombre;
         //ccm.PrecioVenta = getPrecioVentaPesos(cm.PrecioCompra, cm.PorcentajeGanancia);
-        ccm.PrecioCompra = cm.PrecioCompra;
+        ccm.PrecioCompra = (double)cm.PrecioCompra;
         ccm.Comision = tmm.Comision;
         ccm.IdTipoMovimiento = tmm.IdTiposMovimiento;
         ccm.CotizacionDolar = (double)cotizacion.CotizacionPesos;

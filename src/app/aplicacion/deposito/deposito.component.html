@@ -4,8 +4,12 @@
 <h3>Depositos!</h3>
 <p>Ingrese el monto a depositar</p>
 <form action="" [formGroup]="formDeposito" (ngSubmit)="registrarDeposito()">
-    <input type="number" formControlName="montoDeposito">
-  
+  <mat-form-field>
+    <input  required matInput type="number" formControlName="montoDeposito" placeholder="Monto a depositar">
+  </mat-form-field>
+  <h6>Para realizar el deposito envie los fondos a siguiente C.B.U:</h6>
+    <p>CBU CriptoTrust: 350020389327637263722</p>
+ <!-- 
 <p>Seleccione la entidad con la que va a realizar el deposito</p>
 <mat-form-field appearance="fill">
     <mat-label>Bancos</mat-label>
@@ -15,12 +19,13 @@
     
     </select>
   </mat-form-field>
+  -->
 <div>
   <p>Recuerde que los depositos tienen una comision de {{comision * 100}}%.</p>
 </div>
 
 <div>
-  <input type="submit" value="Realizar Deposito">
+  <button [disabled]="!formDeposito.valid" type="submit" value="Realizar Deposito" mat-raised-button color="primary">Realizar Deposito</button>
 </div>
 </form>
 </div>

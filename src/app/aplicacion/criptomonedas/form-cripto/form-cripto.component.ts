@@ -29,14 +29,14 @@ export class FormCriptoComponent implements OnInit, OnDestroy {
 
     this.criptomonedasForm = this.formBuilder.group({
        idCriptomoneda:[{value:'', disabled: true}],
-      nombre:[''], 
-      precioCompra:[''],
-     stockDisponible:[''], 
-      simbolo:[''], 
-     porcentajeGanancia :[''],
+      nombre:['',Validators.required], 
+      precioCompra:['',Validators.required],
+     stockDisponible:['',Validators.required], 
+      simbolo:['',Validators.required], 
+     porcentajeGanancia :['',Validators.required],
      stockTotal:[''],
-      precioVenta :[''],
-    imagenUrl: [''],
+      
+    imagenUrl: ['',Validators.required],
     fechaBaja: [{value:'', disabled: true} ]
     });
 

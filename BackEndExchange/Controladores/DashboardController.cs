@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using BackEndExchange.Model;
 using BackEndExchange.Model.PropositoGeneral;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace BackEndExchange.Controladores
 {
@@ -20,24 +19,59 @@ namespace BackEndExchange.Controladores
     {
       _ex = ex;
     }
-    // GET: api/<ValuesController>
-    [HttpGet]
-    public IActionResult Get()
+    [HttpGet("movimientos/{id}")]
+    public IActionResult GetMovimientos(int id)
+    {
+      RespuestaModel rm = new RespuestaModel();
+      try
+      {
+        
+        var query = from df in _ex.DetalleFacturas
+                    join c in _ex.Criptomonedas  on  df.IdCriptomoneda equals c.IdCriptomoneda into cd
+                    from subCd in cd.DefaultIfEmpty()
+                    join f in _ex.Facturas on df.IdFactura equals f.IdFactura
+                    join tm in _ex.TiposMovimientos on f.IdTipoMovimiento equals tm.IdTiposMovimiento
+                    where f.IdUsuario == id
+                    select new MovimientosUsuarioModel
+                    {
+                      Fecha =  f.Fecha,
+                      Tipo = tm.Tipo.Trim(),
+                      Nombre = subCd.Nombre.Trim(),
+                      Cantidad =  df.Cantidad,
+                      Monto = df.Monto,
+                      Precio = df.Precio,
+                      IdBanco = f.IdBanco
+                    };
+        rm.exito = 1;
+        rm.data = query.ToList();
+        return Ok(rm);
+      }
+      catch(Exception e)
+      {
+        rm.exito = 0;
+        rm.mensanje = e.Message;
+        return Ok(rm);
+      }
+    }
+
+
+        [HttpGet("{id}")]
+    public IActionResult Get(int id)
     {
       RespuestaModel rm = new RespuestaModel();
       try { 
       PrimerDashboardModel pdm = new PrimerDashboardModel();
-        var query = from u in _ex.Usuarios
-                    join b in _ex.Billeteras on u.IdUsuario equals b.IdUsuario
+        var query = from  b in _ex.Billeteras 
                     join c in _ex.Criptomonedas on b.IdCriptomoneda equals c.IdCriptomoneda
+                    where b.IdUsuario == id
                     select new PrimerDashboardModel
                     {
-                      idUsuario = u.IdUsuario,
-                      nombreUsuario = u.Nombre.Trim(),
+                      idUsuario =(int) b.IdUsuario,
+                      idBilletera = b.IdBilletera,
                       precioCompra = c.PrecioCompra,
                       cantidad = b.Cantidad,
                       criptomoneda = c.Nombre.Trim(),
-                      saldo = u.SaldoFiatUsuario
+                      simbolo = c.Simbolo.Trim()
                   };
         rm.exito = 1;
 
@@ -52,29 +86,6 @@ namespace BackEndExchange.Controladores
       }
     }
       
-    // GET api/<ValuesController>/5
-    [HttpGet("{id}")]
-    public string Get(int id)
-    {
-      return "value";
-    }
-
-    // POST api/<ValuesController>
-    [HttpPost]
-    public void Post([FromBody] string value)
-    {
-    }
-
-    // PUT api/<ValuesController>/5
-    [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
-    {
-    }
-
-    // DELETE api/<ValuesController>/5
-    [HttpDelete("{id}")]
-    public void Delete(int id)
-    {
-    }
+   
   }
 }

@@ -1,0 +1,9 @@
+.conteiner{
+    display: grid;
+    justify-content: center;
+    width: 400px;
+    margin: 20px;
+}
+.inputs{
+    width: 100%;
+}

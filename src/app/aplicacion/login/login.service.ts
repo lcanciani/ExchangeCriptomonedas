@@ -13,7 +13,7 @@ import { Respuesta } from 'src/app/modelosGral/respuesta.modelGral';
 
 
 export class LoginService{
-    url: string = 'https://localhost:44383/api/Login/login';
+   private _url: string = 'https://localhost:44383/api/Login/login';
     
     private loginSubject: BehaviorSubject<RespuestaAuth>;
 
@@ -27,7 +27,7 @@ export class LoginService{
 
 
     getToken(resp: LoginModel): Observable<Respuesta>{
-        return  this._http.post<Respuesta>(this.url, resp ).pipe(
+        return  this._http.post<Respuesta>(this._url, resp ).pipe(
             map(res =>{
                 if(res.exito ===1){
                     const user:RespuestaAuth = res.data;

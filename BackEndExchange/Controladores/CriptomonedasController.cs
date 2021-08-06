@@ -40,11 +40,16 @@ namespace BackEndExchange.Controladores
           CriptomonedaModel cm = new CriptomonedaModel();
           cm.IdCriptomoneda = c.IdCriptomoneda;
           cm.Nombre = c.Nombre.Trim();
-          cm.PrecioCompra = (double)c.PrecioCompra;
-          cm.StockDisponible = (double)c.StockDisponible;
+          cm.PrecioCompra = (decimal)c.PrecioCompra;
+          cm.StockDisponible = (decimal)c.StockDisponible;
           cm.Simbolo = c.Simbolo.Trim();
-          cm.StockTotal = (double)c.StockTotal;
-          cm.PorcentajeGanancia = (double)c.PorcentajeGanancia;
+          cm.StockTotal = (decimal)c.StockTotal;
+          if(c.PorcentajeGanancia != null)
+          cm.PorcentajeGanancia = (decimal)c.PorcentajeGanancia;
+          else
+          {
+            cm.PorcentajeGanancia = 0;
+          }
           cm.ImagenUrl = c.ImagenUrl.Trim();
           cm.FechaBaja = c.FechaBaja;
           criptosToFrontend.Add(cm);
@@ -76,11 +81,11 @@ namespace BackEndExchange.Controladores
 
         cm.IdCriptomoneda = c.IdCriptomoneda;
         cm.Nombre = c.Nombre.Trim();
-        cm.PrecioCompra = (double)c.PrecioCompra;
-        cm.StockDisponible = (double)c.StockDisponible;
+        cm.PrecioCompra = (decimal)c.PrecioCompra;
+        cm.StockDisponible = (decimal)c.StockDisponible;
         cm.Simbolo = c.Simbolo.Trim();
         
-        cm.StockTotal = (double)c.StockTotal;
+        cm.StockTotal = (decimal)c.StockTotal;
         
         cm.ImagenUrl = c.ImagenUrl.Trim();
 
@@ -111,7 +116,7 @@ namespace BackEndExchange.Controladores
         c.PrecioCompra = (decimal?)model.PrecioCompra;
         c.StockDisponible = (decimal?)model.StockDisponible;
         c.Simbolo = model.Simbolo;
-        
+        c.PorcentajeGanancia = (decimal?)model.PorcentajeGanancia;
         c.StockTotal = (decimal?)model.StockTotal;
         
         c.ImagenUrl = model.ImagenUrl;

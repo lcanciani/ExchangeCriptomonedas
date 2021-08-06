@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CompraService } from '../compra.service';
 import {ConfirmarCompraModel} from '../confirmar-compra/confirmarCompra.model'
@@ -27,8 +27,8 @@ export class ConfigurarCompraComponent implements OnInit {
   ngOnInit(): void {
     this.formConfigurarCompra = this._formBuilder.group({
       
-      cantidad:[''],
-      monto:['']
+      cantidad:['',[Validators.required,Validators.min(1),Validators.max(1000000000)]],
+      monto:[{value: '', disabled: true}]
     });
 
     this._compraService.getCriptoAConfigurarCompra().subscribe(resp => {

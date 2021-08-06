@@ -1,14 +1,11 @@
 import { CriptomonedaModel } from "./criptomoneda.model"
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable, BehaviorSubject, observable } from "rxjs";
+import { Observable, BehaviorSubject } from "rxjs";
 import {Respuesta} from "src/app/modelosGral/respuesta.modelGral"
-import { filter } from "rxjs/operators";
 
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwiZW1haWwiOi"+
-"JmZXJjYW5jaWFuaUBnbWFpbC5jb20gICAgICAgICAgICAgICAgICAgICAgICAgICA"+
-"gICIsIm5iZiI6MTYyNzMxOTAxNywiZXhwIjoxNjMyNTAzMDE3LCJpYXQiOjE2Mjcz"+
-" MTkwMTd9.zCMBDBsGNyyVia1QCxvFugrQyGFD1Owt8Z3Er3DFphQ";
+
+
 
 const httpOptions = {
     headers: new HttpHeaders({
@@ -41,20 +38,20 @@ export class CriptomonedasService {
     getCriptomonedaById(id: number):Observable<Respuesta>{
         
         
-        return this._http.get<Respuesta>(`${this.url}/${id}`);
+        return this._http.get<Respuesta>(`${this.url}/${id}`, httpOptions);
     }
 
     addCriptomoneda(cripto: CriptomonedaModel): Observable<Respuesta>{
        
-       return this._http.post<Respuesta>(this.url, cripto);
+       return this._http.post<Respuesta>(this.url, cripto, httpOptions);
     }
 
     editarCriptomoneda(cripto: CriptomonedaModel): Observable<Respuesta>{
-        return this._http.put<Respuesta>(this.url, cripto);
+        return this._http.put<Respuesta>(this.url, cripto, httpOptions);
     }
 
     eliminarCriptomoneda(id: number):Observable<Respuesta>{
-        return this._http.delete<Respuesta>(`${this.url}/${id}`);
+        return this._http.delete<Respuesta>(`${this.url}/${id}`, httpOptions);
     }
 
     cargarCripto(element: CriptomonedaModel){

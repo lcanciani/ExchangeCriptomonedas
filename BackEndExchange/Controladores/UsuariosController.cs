@@ -1,7 +1,9 @@
 using BackEndExchange.Model;
+using BackEndExchange.Model.PropositoGeneral;
 using BackEndExchange.Model.Request;
 using BackEndExchange.Model.Response;
 using BackEndExchange.Services;
+using BackEndExchange.Tools;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -26,130 +28,121 @@ namespace BackEndExchange.Controladores
         {
             _ex = ex;
         }
-
-        [HttpGet]
-        public IActionResult Get()
+    [HttpGet]
+    public IActionResult Get()
+    {
+      RespuestaModel rm = new RespuestaModel();
+      try
+      {
+        var usuarios = _ex.Usuarios.ToList();
+        List<UsuarioModel> lum = new List<UsuarioModel>();
+        foreach(Usuario u in usuarios)
         {
-            try
-            {
-                var usuarios = _ex.Usuarios.ToList();
-                return Ok(usuarios);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-
+          UsuarioModel um = new UsuarioModel();
+          um.IdUsuario = u.IdUsuario;
+          um.Nombre = u.Nombre.Trim();
+          um.Apellido = u.Apellido.Trim();
+          um.Direccion = u.Direccion.Trim();
+          um.Email = u.Email.Trim();
+          um.Contrasenia = u.Contrasenia.Trim();
+          um.FechaBaja = u.FechaBaja;
+          if(u.Dni != null)
+          {
+            um.Dni = u.Dni.Trim();
+          }
+          
+          um.SaldoFiatUsuario = u.SaldoFiatUsuario;
+          lum.Add(um);
         }
-        [HttpGet("{id}")]
+        rm.exito = 1;
+        rm.data = lum;
+        return Ok(rm);
+      }
+      catch(Exception e)
+      {
+        rm.exito = 0;
+        rm.mensanje = "No se pudo obtener los usuarios";
+        rm.data = e.Message;
+      return Ok(rm);
 
-        //Probar si trar todos los registros que estan en el arreglo "id"
-        public IActionResult Get(int[] id)
+      }
+    }
+
+    [HttpGet("{id}")]
+
+    public IActionResult Get(int id)
+    {
+      RespuestaModel rm = new RespuestaModel();
+      try
+      {
+        var saldoUsuario = _ex.Usuarios.Find(id).SaldoFiatUsuario;
+        if(saldoUsuario == null)
         {
-            try
-            {
-                
-                var usuarios = _ex.Usuarios.Find(id);
-                return Ok(usuarios);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-        [HttpPost("rango")]
-        public IActionResult Post(object[] id)
-        {
-            try
-            {
-                
-                var usuarios = _ex.Usuarios.Find(id);
-                return Ok(usuarios);
-            }
-            catch(Exception e)
-            {
-                return BadRequest(e.Message);
-            }   
+          rm.exito = 0;
+          rm.mensanje = "El usuario no existe";
+          return Ok(rm);
         }
 
-        //Metodo POST para Agregar un usuarios/ add an user
-        [HttpPost]
-        public IActionResult Post([FromBody] UsuarioModel model)
+        rm.exito = 1;
+        rm.data = saldoUsuario;
+        return Ok(rm);
+      }
+      catch(Exception e)
+      {
+        rm.exito = 0;
+        rm.mensanje = e.Message;
+        return Ok(rm);
+      }
+      
+    }
+      //Metodo POST para Agregar un usuarios/ add an user
+      [HttpPost]
+        public IActionResult Post([FromBody] RegistrarUsuarioModel model)
         {
+      RespuestaModel rm = new RespuestaModel();
+      using(var registrarUsuario = _ex.Database.BeginTransaction())
+      {
+
+      
             try
             {
                 Usuario u = new Usuario();
-                u.IdUsuario = model.IdUsuario;
-
+        u.Nombre = model.Nombre;
+        u.Apellido = model.Apellido;
+        u.Email = model.Email;
+        u.Direccion = model.Direccion;
+        u.Dni = model.Dni;
+          u.SaldoFiatUsuario = 0;
+          
+        u.Contrasenia = Sha256.GetSHA256( model.Password);
                 _ex.Usuarios.Add(u);
-                _ex.SaveChanges();
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] UsuarioModel model)
+        _ex.SaveChanges();
+        foreach(BancoCbu bc in model.BancoCbu)
         {
-            Respuesta resp = new Respuesta();
-            try
-            {
-
-                var usuarioModificar = _ex.Usuarios.Find(id);
-                if (usuarioModificar == null)
-                {
-                    resp.exito = 0;
-                    resp.mensaje = "El usuario a modificar no existe";
-                    return BadRequest(resp);
-                }
-                usuarioModificar.Nombre = model.Nombre;
-                usuarioModificar.Apellido = model.Apellido;
-                usuarioModificar.Direccion = model.Direccion;
-                usuarioModificar.Email = model.Email;
-               
-                usuarioModificar.Contrasenia = model.Contrasenia;
-                
-                _ex.Usuarios.Update(usuarioModificar);
-                _ex.SaveChanges();
-                resp.exito = 1;
-                resp.mensaje = "El usuario se modifico correctamente";
-                return Ok(resp);
+          BancosUsuario bu = new BancosUsuario();
+          bu.IdBanco = bc.IdBanco;
+          bu.Cbu = bc.Cbu;
+          bu.IdUsuario = u.IdUsuario;
+          _ex.BancosUsuarios.Add(bu);
+          _ex.SaveChanges();
+        }
+          registrarUsuario.Commit();
+          rm.exito = 1;
+          rm.mensanje = "Usuario registrado con éxito!";
+          return Ok(rm);
             }
+        
             catch (Exception e)
             {
-                resp.exito = 0;
-                resp.mensaje = "No se pudo modificar el usuario: exception " + e.Message;
-                
-
-                return BadRequest(resp);
+          registrarUsuario.Rollback();
+        rm.exito = 0;
+        rm.mensanje = e.Message;
+                return Ok(rm);
             }
+      }
+    }
 
-        }
-
-
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            try
-            {
-
-                Usuario u = new Usuario();
-                u = _ex.Usuarios.Find(id);
-                if (u == null)
-                    return BadRequest("El Usuario que intenta eliminar no existe");
-
-                _ex.Usuarios.Remove(u);
-                _ex.SaveChanges();
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
+       
 
     }
 }

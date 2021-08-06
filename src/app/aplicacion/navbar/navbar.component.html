@@ -16,10 +16,12 @@
 <mat-toolbar color="primary" class="grid">
     
     
-    <button mat-button routerLink="/comp/dashboard" >Dashboard</button>
-    <button mat-button routerLink="/comp/venta" >Comprar</button>
-    <button mat-button (click)="irCriptomonedas()">Editar</button>
-    <button mat-button routerLink="/comp/compra" >Vender</button>
+    <button mat-button routerLink="/comp/dashboard" routerLinkActive="activa">Dashboard</button>
+    <button mat-button routerLink="/comp/venta" routerLinkActive="activa">Comprar</button>
+    <button mat-button routerLink="/comp/editar" routerLinkActive="activa">Editar</button>
+    <button  mat-button routerLink="/comp/compra" routerLinkActive="activa">Vender</button>
+    <button mat-button routerLink="/comp/enviarMail" routerLinkActive="activa">Enviar email</button>
+    <button mat-button routerLink="/comp/estadisticas" routerLinkActive="activa">Estadísticas</button>
     
     <!-- <button mat-button routerLink="/dashboard">LogOut</button> 
     <button mat-icon-button class="example-icon" routerLink="/" aria-label="Example icon-button with menu icon">

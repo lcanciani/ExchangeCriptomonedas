@@ -27,6 +27,10 @@ import { ExtraccionComponent } from './extraccion/extraccion.component';
 import { ExtraccionService } from './extraccion/extraccion.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import {JwtInterceptors} from './security/jwt.interceptor';
+import { MailComponent } from './mail/mail.component';
+import { MailService } from './mail/mail.service';
+import { EstadisticasComponent } from './estadisticas/estadisticas.component';
+
 
 @NgModule({
   declarations: [
@@ -46,7 +50,10 @@ import {JwtInterceptors} from './security/jwt.interceptor';
     CompraComponent,
     ConfigurarCompraComponent,
     ConfirmarCompraComponent,
-    ExtraccionComponent
+    ExtraccionComponent,
+    MailComponent,
+    EstadisticasComponent,
+    
   ],
   imports: [
     CommonModule,
@@ -67,7 +74,11 @@ import {JwtInterceptors} from './security/jwt.interceptor';
     DashboardComponent,
     UsuarioComponent
   ],
-  providers: [CriptomonedasService,VentaService,DashboardService,ExtraccionService,{
+  providers: [MailService,
+              CriptomonedasService,
+              VentaService,
+              DashboardService,
+              ExtraccionService,{
     provide: HTTP_INTERCEPTORS, useClass: JwtInterceptors, multi: true
   }]
 })

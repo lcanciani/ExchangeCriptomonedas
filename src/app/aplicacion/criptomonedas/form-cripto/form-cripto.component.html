@@ -68,7 +68,7 @@
         </div>
     </div>
         <div>
-            <button type="submit" mat-raised-button color="primary">{{_agregarEditarButton}}</button>
+            <button [disabled]="!criptomonedasForm.valid" type="submit" mat-raised-button color="primary">{{_agregarEditarButton}}</button>
         </div>
     
     </form>

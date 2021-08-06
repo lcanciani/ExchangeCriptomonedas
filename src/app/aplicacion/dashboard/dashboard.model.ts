@@ -1,8 +1,8 @@
 export class DashboardModel{
     idUsuario: number;
-    nombreUsuario: string;
-    saldo: number;
-    criptomoneda: string;
+    idBilletera: number;
     precioCompra: number;
     cantidad: number;
+    criptomoneda: string;
+    simbolo: string;  
 }

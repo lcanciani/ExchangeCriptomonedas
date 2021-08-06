@@ -18,6 +18,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using BackEndExchange.Model;
+using BackEndExchange.Model.Request;
 
 namespace BackEndExchange
 {
@@ -55,12 +56,12 @@ namespace BackEndExchange
             //var connectionString = Configuration.GetConnectionString("DevConecction");
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
-           
-            //services.AddSingleton<ExchangeDBContext>();
+      services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+      //services.AddSingleton<ExchangeDBContext>();
 
-            //Arranca JWT
+      //Arranca JWT
 
-            var appSettings = appSettingsSection.Get<AppSettings>();
+      var appSettings = appSettingsSection.Get<AppSettings>();
             var llave = Encoding.ASCII.GetBytes(appSettings.secreto);
             /*se intala Microsoft.AspNetCore.Authentication.JwtBearer de nuget: 
              es un standart para crear tokens web.
@@ -87,8 +88,9 @@ namespace BackEndExchange
       services.AddScoped<IVentaService,VentaService>();
             //services.AddRazorPages();
             services.AddDbContext<ExchangeDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DevConecction")));
-            //services.AddDbContext<ExchangeDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DevConecction")), ServiceLifetime.Singleton);
-        }
+      //services.AddDbContext<ExchangeDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DevConecction")), ServiceLifetime.Singleton);
+      services.AddTransient<IMailService, MailService>();
+    }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

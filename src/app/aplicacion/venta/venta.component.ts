@@ -33,7 +33,7 @@ export class VentaComponent implements OnInit {
     this._ventaService.estadoPrecioCompra().subscribe(resp =>{
       this.estadoPrecioCompra = resp.data.precioErrorStatus;
       console.log(this.estadoPrecioCompra);
-    })
+    });
   }
   configurarVenta(idCripto: number){
     if(this.estadoPrecioCompra == 0)

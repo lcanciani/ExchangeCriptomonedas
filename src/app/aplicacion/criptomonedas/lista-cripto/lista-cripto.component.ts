@@ -28,12 +28,17 @@ export class ListaCriptoComponent implements OnInit {
 cargarCripto(element: CriptomonedaModel){
   
   this.criptomonedasService.cargarCripto(element);
-console.log("este es el hdp: -> ")
-  console.log(element.idCriptomoneda);
+
 }
   
 eliminarCripto(element: number){
 this.criptomonedasService.eliminarCriptomoneda(element).subscribe(respuesta =>{
+  if(respuesta.exito ===1){
+    this._snackBar.open('La criptomoneda se dio de baja con exito','',{
+      duration: 1000,
+      verticalPosition: 'top'
+    })
+  }
   if(respuesta.exito === 0 && respuesta.data !== undefined){
     this._snackBar.open('La criptomoneda ya esta dada de baja','',{
       duration: 1000,
@@ -56,6 +61,7 @@ restablecerForm(){
   this.criptomonedaModel.imagenUrl='';
   this.criptomonedaModel.fechaBaja = undefined;
   this.criptomonedasService.cargarCripto(this.criptomonedaModel)
+  
 }
 
 }

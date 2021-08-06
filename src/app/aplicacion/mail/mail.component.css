@@ -1,0 +1,19 @@
+.grid{
+    display: grid;
+    justify-content: center;
+}
+.flex{
+    display: flex;
+    justify-content: center;
+}
+
+.boton{
+    width: 70%;
+}
+table{
+    width: 100%;
+}
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }

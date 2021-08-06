@@ -4,11 +4,16 @@ import {Injectable,OnInit} from '@angular/core';
 import {CriptomonedasService} from '../criptomonedas/criptomonedas.service'
 import {ConfigurarCompraModel} from './configurar-compra/cofigurarCompra.model';
 import { Respuesta } from 'src/app/modelosGral/respuesta.modelGral';
-import { HttpClient} from "@angular/common/http";
+import { HttpClient, HttpHeaders} from "@angular/common/http";
 import { Router } from '@angular/router';
 
-
 import { ConfirmarCompraModel } from './confirmar-compra/confirmarCompra.model';
+
+const httpOptions = {
+    headers: new HttpHeaders({
+        'Contend-Type': 'application/json'
+    })
+};
 
 @Injectable({
     providedIn: 'root'
@@ -27,14 +32,13 @@ ngOnInit(){
 }
 
 getCriptoCompraById(idCripto: number): Observable<Respuesta>{
-return this._http.get<Respuesta>(`${this._url}/${idCripto}`);
+return this._http.get<Respuesta>(`${this._url}/${idCripto}`,httpOptions);
 }
 
 configurarCompra(idCripto: number){
     console.log(idCripto)
     this.getCriptoCompraById(idCripto).subscribe(resp =>{
-        console.log('service')
-        console.log(resp)
+        
 
        this._subjectCriptoCompra.next(resp);
        this._route.navigate(['/comp/configurarCompra']);
@@ -63,6 +67,6 @@ getConfirmarCompra():Observable<ConfirmarCompraModel>{
 insertarCompra():Observable<Respuesta>{
 console.log('llegue CompraService.insertarCompra()')
 console.log(this._confirmarCompraModel)
- return this._http.post<Respuesta>(`${this._url}`,this._confirmarCompraModel);
+ return this._http.post<Respuesta>(`${this._url}`,this._confirmarCompraModel,httpOptions);
 }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CompraService } from '../compra.service';
 import {ConfirmarCompraModel} from './confirmarCompra.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-confirmar-compra',
@@ -13,7 +14,8 @@ export class ConfirmarCompraComponent implements OnInit {
    datosCompra: ConfirmarCompraModel = new ConfirmarCompraModel();
   
   constructor(private _compraService: CompraService,
-              private _route: Router) { }
+              private _route: Router,
+              private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this._compraService.getConfirmarCompra().subscribe(resp=>{
@@ -23,9 +25,18 @@ export class ConfirmarCompraComponent implements OnInit {
   registrarCompra(){
     console.log('llegue')
     this._compraService.insertarCompra().subscribe(resp =>{
-      console.log('lleguex3')
-      console.log(resp)
-      
+      if(resp.exito === 1){
+        this._snackBar.open('Venta realizada con éxito!','',{
+          duration:2500,
+          verticalPosition:'top'
+        })
+      }
+      else{
+        this._snackBar.open('No se pudo realizar la venta!','',{
+          duration:2500,
+          verticalPosition:'top'
+        })
+      }
     });
     //this._route.navigate()
   }

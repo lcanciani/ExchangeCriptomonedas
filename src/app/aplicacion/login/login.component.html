@@ -6,23 +6,16 @@
     <form [formGroup]= "loginForm" (ngSubmit)="getUserToken()">
         <div>
             <mat-form-field>
-                <input required matInput formControlName="email" type="text" placeholder="Email" >
+                <input autocomplete="off" required matInput formControlName="email" type="text" placeholder="Email" >
             </mat-form-field>
         </div>
-<!--
-        <div>
-            
-            <mat-form-field>
-                <input matInput formControlName="password" type="password" placeholder="Contraseña" >
-            </mat-form-field>
-        </div>
--->
+
 
 
         <div class="example-container">
             <mat-form-field >
               <mat-label>Ingrese su password</mat-label>
-              <input required
+              <input autocomplete="off" required
               formControlName="password"
               matInput [type]="hide ? 'password' : 'text'">
               <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
@@ -41,9 +34,8 @@
         <p>¿No tiene cuenta?</p>
         <div>
             
-            <button  mat-raised-button color="succes" type="button" value="Crear cuenta" >Crear cuenta</button>
-                
-            
+            <button  mat-raised-button color="succes" type="button" routerLink="/registrarUsuario" value="Crear cuenta" >Crear cuenta</button>
+   
         </div>
 
     </form>

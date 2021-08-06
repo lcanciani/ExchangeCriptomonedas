@@ -21,12 +21,7 @@ namespace BackEndExchange.Controladores
     {
       _ex = ex;
     }
-    // GET: api/<ExtraccionController>
-    [HttpGet]
-    public IEnumerable<string> Get()
-    {
-      return new string[] { "value1", "value2" };
-    }
+    
 
 
     [HttpPost("/datosExtraccion")]
@@ -74,13 +69,7 @@ namespace BackEndExchange.Controladores
       
     }
 
-    // GET api/<ExtraccionController>/5
-    [HttpGet("{id}")]
-    public string Get(int id)
-    {
-      return "value";
-    }
-
+   
     // POST api/<ExtraccionController>
     [HttpPost("/registrarExtraccion")]
     public IActionResult registrarExtraccion([FromBody] ExtraccionModel model)
@@ -121,18 +110,6 @@ namespace BackEndExchange.Controladores
         rm.mensanje = e.Message;
         return Ok();
       }
-    }
-
-    // PUT api/<ExtraccionController>/5
-    [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
-    {
-    }
-
-    // DELETE api/<ExtraccionController>/5
-    [HttpDelete("{id}")]
-    public void Delete(int id)
-    {
     }
   }
 }

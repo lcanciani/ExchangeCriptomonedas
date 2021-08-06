@@ -13,6 +13,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatSelectModule} from '@angular/material/select';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 @NgModule({
@@ -20,7 +23,7 @@ import {MatSelectModule} from '@angular/material/select';
   imports: [
     
     MatTableModule,
-    
+    MatTooltipModule,
     MatDialogModule,
     MatButtonModule,
     MatInputModule,
@@ -32,11 +35,13 @@ import {MatSelectModule} from '@angular/material/select';
     MatCardModule,
     MatIconModule,
     MatToolbarModule,
-    MatSelectModule
+    MatSelectModule,
+    MatChipsModule,
+    MatPaginatorModule
   ],
   exports:[
     MatTableModule,
-    
+    MatTooltipModule,
     MatDialogModule,
     MatButtonModule,
     MatInputModule,
@@ -48,7 +53,9 @@ import {MatSelectModule} from '@angular/material/select';
     MatCardModule,
     MatIconModule,
     MatToolbarModule,
-    MatSelectModule
+    MatSelectModule,
+    MatChipsModule,
+    MatPaginatorModule
   ]
 })
 export class SharedModule { }

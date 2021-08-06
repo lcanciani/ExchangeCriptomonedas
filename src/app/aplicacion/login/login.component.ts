@@ -3,7 +3,7 @@ import { LoginService } from './login.service';
 import { RespuestaAuth } from './respuestaAuth.model';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators  } from '@angular/forms';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 
@@ -19,11 +19,12 @@ export class LoginComponent implements OnInit {
   hide = true;
   constructor( private _loginService: LoginService,
                private _route: Router,
-               private _formBuilder: FormBuilder) { }
+               private _formBuilder: FormBuilder,
+               private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.loginForm = this._formBuilder.group({
-      email:['', Validators.required],
+      email:['', [Validators.required,Validators.email]],
       password:['', Validators.required]
     })
 
@@ -34,7 +35,14 @@ export class LoginComponent implements OnInit {
     this._loginService.getToken(this.loginForm.value).subscribe(resp => {
       if(resp.exito ===1){
        // console.log(resp.data.token)
-        this._route.navigate(['comp']);
+        this._route.navigate(['comp/dashboard']);
+      }
+      else{
+        this._snackBar.open('Usuario o contraseña incorrecto','',{
+          duration:2000,
+          verticalPosition:'top'
+        })
+        this.loginForm.reset();
       }
     })
   }

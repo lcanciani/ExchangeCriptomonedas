@@ -12,9 +12,13 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "es2020",
+    //para el reporte jspdf
+    "allowSyntheticDefaultImports": true,
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    //para el reporte jspdf
+    "resolveJsonModule": true
   }
 }

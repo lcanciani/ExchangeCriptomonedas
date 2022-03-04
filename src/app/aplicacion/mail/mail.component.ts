@@ -62,7 +62,7 @@ this._mailService.registrarMail(this.mailRequest).subscribe(resp =>{
       verticalPosition:'top'
     });
   }else{
-    this._snackBar.open(resp.data.mensaje,'',{
+    this._snackBar.open('Email NO enviado','',{
       duration: 2000
     });
   }

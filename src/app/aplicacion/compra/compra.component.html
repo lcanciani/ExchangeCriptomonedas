@@ -1,7 +1,7 @@
 <div style="margin: 15px;"> 
     <p>Compre y venda criptomonedas!</p> 
     <div class="grid">
-    <div *ngFor = "let item of listaCriptomonedas; let i = index" >
+    <div *ngFor = "let item of listaCriptomonedasVenta; let i = index" >
         <div class=" mat-elevation-z4  card-payment"  >
            <div class="cripto "> 
                 <img src="{{item.imagenUrl}}" 
@@ -14,7 +14,7 @@
             <div>
             <button  style="margin: 10px; width: 90%; cursor: pointer;"  
             mat-raised-button color="primary"
-            (click)="configurarCompra(item.idCriptomoneda)">Vender</button>
+            (click)="configurarCompra(item.idCriptomoneda) ">Vender</button>
             </div>
         </div>
     </div>

@@ -10,12 +10,36 @@
         <div class="flex">
             <mat-form-field>
                 
-        <input matInput type="number" (input)="onSearchChange($event.target.value)" formControlName="cantidad" placeholder="Cantidad">
+        <input matInput type="number" 
+        (input)="onSearchChange($event.target.value)" 
+        formControlName="cantidad" 
+        placeholder="Cantidad">
         
+       
         
     </mat-form-field>
+    <span *ngIf="this.validarCantidad ">
+        Saldo insuficiente
+      </span>
 </div>
-        <hr>
+
+<mat-form-field >
+    <mat-label>Forma de compra</mat-label>
+    <mat-select  formControlName="formaCompra" (selectionChange)="cambioFormaPago()" [(ngModel)]="selected">
+      <mat-option *ngFor="let forma of formaCompra" [value]="forma.value">
+          <div>
+          <img [src]="forma.imgUrl" alt="" height="15px" width="15px">
+        {{forma.viewValue}}
+    </div>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+<div>
+    <hr> 
+    
+</div>
+        
         <div class="flex">
             <mat-form-field>
         <input matInput type="number" value="{{datosCompra.monto}}" formControlName="monto" placeholder="Monto de la venta">
@@ -28,7 +52,7 @@
 
     </div>
     <div>
-        <button [disabled]="!formConfigurarCompra.valid" mat-raised-button color="primary" (click)="confirmarCompra()">Confirmar venta</button>
+        <button [disabled]="this.invalidarForm || !this.formConfigurarCompra.valid" mat-raised-button color="primary" (click)="confirmarCompra()">Confirmar venta</button>
     </div>
 </div>
 

@@ -1,4 +1,6 @@
 <h2>Seleccione el usuario al que le quiere enviar email:</h2>
+
+<div class="margenGeneral">
 <mat-form-field appearance="standard">
     <mat-label>Filter</mat-label>
     <input autocomplete="off" matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
@@ -86,6 +88,7 @@
         <button mat-raised-button color="primary" [disabled]="!mailForm.valid" type="submit">Enviar mail</button>
     </div>
 </form>
+</div>
 </div>
 </div>
 </div>

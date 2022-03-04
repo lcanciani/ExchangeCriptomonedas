@@ -1,0 +1,100 @@
+<div>
+  <a hidden="true" style="cursor: pointer;" id="headerReporte"><h2 class="">CriptoTrust</h2></a>
+  
+</div>
+
+
+<div class="margenGeneral">
+
+  <p>Reportes de compras segun usuario por temporalidad:</p>
+  <!--
+    <button mat-raised-button color="primary" (click)=getDatosReporteCompras(0)>Hoy</button>
+    <button mat-raised-button color="primary" (click)=getDatosReporteCompras(1)>Esta semana</button>
+    <button mat-raised-button color="primary" (click)=getDatosReporteCompras(2)>Este mes</button>
+    <button mat-raised-button color="primary" (click)=getDatosReporteCompras(3)>Ultimos 30 días</button>
+    <button mat-raised-button color="primary" (click)=getDatosReporteComprasPorFechas()>Buscar por fechas</button>
+   -->
+
+    <mat-button-toggle-group name="favoriteColor" aria-label="Favorite Color">
+      <mat-button-toggle value="red" (click)=getDatosReporteCompras(0)> Hoy</mat-button-toggle>
+      <mat-button-toggle value="green" (click)=getDatosReporteCompras(1)>Esta semana</mat-button-toggle>
+      <mat-button-toggle value="blue" (click)=getDatosReporteCompras(2)>Este mes</mat-button-toggle>
+      <mat-button-toggle value="blue" (click)=getDatosReporteCompras(3)>Ultimos 30 días</mat-button-toggle>
+      <mat-button-toggle value="blue" (click)=getDatosReporteComprasPorFechas()>Buscar por fechas</mat-button-toggle>
+    </mat-button-toggle-group>
+
+
+    
+    <div>
+      
+      <form action="" [formGroup]="reportesForm">
+        <div>
+      <mat-form-field >
+        <mat-label>Seleccionar fecha de inicio</mat-label>
+        
+        
+          <input matInput [matDatepicker]="dp3"  id="fechaInicio" formControlName="fechaInicio">
+      
+      
+        <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+        <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+      </mat-form-field>
+    </div>
+      <br>
+     
+    
+    <div>
+      <mat-form-field >
+        <mat-label>Seleccionar fecha de fin</mat-label>
+        
+        
+          <input matInput [matDatepicker]="dp4" id="fechaFin" formControlName="fechaFin">
+      
+      
+        <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
+       
+         <mat-datepicker #dp4 disabled="false"></mat-datepicker>
+         
+      </mat-form-field>
+   
+    </div>
+  
+</form>
+</div>
+    <button mat-raised-button color="primary" (click)=descargarPDFAutoTable() >Descargar/Imprimir reporte</button>
+<div id='htmlData'>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table" id="tablaReporteCompras">
+        <!-- Position Column -->
+        <ng-container matColumnDef="demo-position">
+          <th mat-header-cell *matHeaderCellDef> Id. </th>
+          <td mat-cell *matCellDef="let element"> {{element.idUsuario}} </td>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="demo-name">
+          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+          <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+        </ng-container>
+      
+        <!-- Weight Column -->
+        <ng-container matColumnDef="demo-weight">
+          <th mat-header-cell *matHeaderCellDef> Apellido </th>
+          <td mat-cell *matCellDef="let element"> {{element.apellido}} </td>
+        </ng-container>
+      
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="demo-symbol">
+          <th mat-header-cell *matHeaderCellDef> Monto total </th>
+          <td mat-cell *matCellDef="let element"> {{element.montoTotal}} </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">Sin datos</td>
+        </tr>
+      </table>
+    </div>
+   
+     
+</div>

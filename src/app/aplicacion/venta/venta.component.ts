@@ -14,7 +14,7 @@ import { VentaService } from './venta.service';
 })
 export class VentaComponent implements OnInit {
 
-  listaCriptomonedas:CriptomonedaModel[];
+  listaCriptomonedas:CriptomonedaModel[] = [];
   criptomoneda: CriptomonedaModel;
  estadoPrecioCompra: number;
   
@@ -26,7 +26,11 @@ export class VentaComponent implements OnInit {
   ngOnInit(): void {
 
     this._criptomonedasService.getCriptomonedas().subscribe(resp => {
-      this.listaCriptomonedas = resp.data;
+      resp.data.forEach(element => {
+        if(!element.fechaBaja){
+          this.listaCriptomonedas.push(element);
+        }
+      });
     })
     
 

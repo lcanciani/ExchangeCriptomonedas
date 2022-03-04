@@ -33,5 +33,6 @@ export class ConfirmarVentaComponent implements OnInit {
       }
     });
     //this._route.navigate()
+    this._route.navigate(['/comp'])
   }
 }

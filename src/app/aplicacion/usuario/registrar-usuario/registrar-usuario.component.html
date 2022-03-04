@@ -74,7 +74,7 @@
         <!---->
           <div>
             <mat-form-field class="inputs">
-                <input autocomplete="off" #cbu type="number"  (input)="onSearchChange($event.target.value)" placeholder="CBU al que va a extraer los fondos" formControlName="cbu" matInput>
+                <input autocomplete="off" #cbu type="number"  (input)="onSearchChange($event.target.value)" placeholder="CBU al que va a extraer los fondos" formControlName="cbu" matInput required>
             </mat-form-field>
         </div>
              <!--[disabled]="!registrarCbuBancoFrom.valid || false "-->

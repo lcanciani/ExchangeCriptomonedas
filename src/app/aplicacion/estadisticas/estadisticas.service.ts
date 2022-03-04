@@ -16,6 +16,7 @@ const httpOptions = {
 
 export class EstadisticasService {
     private _url = 'https://localhost:44383/api/Estadisticas/criptomonedaEstadisticas';
+    
     constructor(private _http: HttpClient,
                 private _route: Router
                 ){}
@@ -23,7 +24,7 @@ export class EstadisticasService {
         return this._http.get<Respuesta>(this._url, httpOptions);
     }
     
-
+    
 
 
 }

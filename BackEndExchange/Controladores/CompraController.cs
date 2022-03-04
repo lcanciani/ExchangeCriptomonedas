@@ -56,7 +56,7 @@ namespace BackEndExchange.Controladores
       {
         
         var c = _ex.Criptomonedas.Find(id);
-        var movimiento = _ex.TiposMovimientos.Single(mov => mov.Tipo == "VentaCripto");
+        var movimiento = _ex.TiposMovimientos.FirstOrDefault(mov => mov.Tipo == "CompraCripto");
 
         CriptomonedaModel cm = new CriptomonedaModel();
         cm.IdCriptomoneda = c.IdCriptomoneda;
@@ -152,16 +152,10 @@ namespace BackEndExchange.Controladores
     }
 
         // PUT api/<CompraController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+       
 
         // DELETE api/<CompraController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+       
 
     private double getPrecioVentaPesos( double precioCompra, double porcentajeGanancia)
     {

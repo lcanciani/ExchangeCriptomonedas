@@ -45,7 +45,7 @@ export class RegistrarUsuarioComponent implements OnInit {
   ngOnInit(): void {
     this.registrarCbuBancoFrom = this._formBuilder.group({
       banco: ['',Validators.required],
-    cbu: ['',[Validators.min(99999999),Validators.max(10000000000)]]
+    cbu: ['',[Validators.min(111111111111),Validators.max(999999999999)]]
     })
 
     this.registrarUsuarioForm = this._formBuilder.group({

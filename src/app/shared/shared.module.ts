@@ -16,7 +16,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatPaginatorModule} from '@angular/material/paginator';
-
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   declarations: [],
@@ -37,7 +38,9 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatToolbarModule,
     MatSelectModule,
     MatChipsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatButtonToggleModule,
+    MatExpansionModule
   ],
   exports:[
     MatTableModule,
@@ -55,7 +58,9 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatToolbarModule,
     MatSelectModule,
     MatChipsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatButtonToggleModule,
+    MatExpansionModule
   ]
 })
 export class SharedModule { }

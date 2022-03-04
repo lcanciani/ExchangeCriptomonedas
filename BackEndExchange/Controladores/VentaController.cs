@@ -39,7 +39,7 @@ namespace BackEndExchange.Controladores
       {
 
         var c = _ex.Criptomonedas.Find(id);
-        var movimiento = _ex.TiposMovimientos.Where(mov => mov.Tipo == "CompraCripto").FirstOrDefault();
+        var movimiento = _ex.TiposMovimientos.Where(mov => mov.Tipo == "VentaCripto").FirstOrDefault();
 
         CriptomonedaModel cm = new CriptomonedaModel();
         cm.IdCriptomoneda = c.IdCriptomoneda;

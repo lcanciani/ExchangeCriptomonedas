@@ -7,6 +7,7 @@ import { TipoMovimientoModel } from '../dashboard/tipoMovimiento.model';
 import { DepositoModel } from './deposito.model';
 import {DepositoService} from './deposito.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-deposito',
@@ -24,7 +25,8 @@ export class DepositoComponent implements OnInit {
               private _bancoService: BancosService,
               private _depositoService: DepositoService,
               private _dashBoardService:DashboardService,
-              private _snackBar: MatSnackBar) { }
+              private _snackBar: MatSnackBar,
+              private _route: Router) { }
 
   ngOnInit(): void {
     this.formDeposito = this._formBuilder.group({
@@ -57,7 +59,9 @@ registrarDeposito(){
         duration: 2000
       });
       this.formDeposito.reset();
+      this._route.navigate(['/comp'])
     }
+
   });
 }
 }

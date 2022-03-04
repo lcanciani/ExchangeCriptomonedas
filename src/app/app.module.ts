@@ -36,6 +36,7 @@ import { SharedModule } from './shared/shared.module';
 import { RegistrarUsuarioComponent } from './aplicacion/usuario/registrar-usuario/registrar-usuario.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,

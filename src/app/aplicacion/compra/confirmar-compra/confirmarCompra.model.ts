@@ -9,4 +9,5 @@ export class ConfirmarCompraModel{
     cantidad: number;
     monto: number;
     porcentajeGanancia: number;
+    
 }

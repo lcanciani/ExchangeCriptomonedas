@@ -5,7 +5,8 @@ import {LoginComponent} from './aplicacion/login/login.component';
 import {AuthGuard} from './aplicacion/login/auth.guard';
 import {AplicacionComponent} from './aplicacion/aplicacion.component'
 import { RegistrarUsuarioComponent } from './aplicacion/usuario/registrar-usuario/registrar-usuario.component';
-
+import { TerminosYCondicionesComponent } from './aplicacion/terminos-ycondiciones/terminos-ycondiciones.component';
+import { PreguntasFrecuentesComponent } from './aplicacion/preguntas-frecuentes/preguntas-frecuentes.component';
 
 const routes: Routes = [
   {path: 'comp', component: AplicacionComponent,loadChildren:()=>import( './aplicacion/aplicacion.module').then(m=>m.AplicacionModule)},
@@ -15,6 +16,8 @@ const routes: Routes = [
   //{path: 'confirmarVenta', component: ConfirmarVentaComponent},
   //{path: 'criptomonedas', component:CriptomonedasComponent},
   {path: 'registrarUsuario', component: RegistrarUsuarioComponent},
+  {path: 'terminosYCondiciones', component: TerminosYCondicionesComponent},
+  {path: 'preguntasFrecuentes', component: PreguntasFrecuentesComponent},
   {path: '',component: LoginComponent },
 {path: '**',component: LoginComponent}
 ];

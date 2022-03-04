@@ -112,7 +112,7 @@ editCriptomoneda(){
   this.criptomonedaModel.imagenUrl = this.criptomonedasForm.get('imagenUrl').value;
   this.criptomonedaModel.fechaBaja = this.criptomonedasForm.get('fechaBaja').value;
   const idCripto = this.criptomonedasForm.get('idCriptomoneda').value;
-  console.log('idCriptooo: '+this.criptomonedaModel.idCriptomoneda + 'pero mira:' + this.criptomonedasForm.get('idCriptomoneda').value) 
+   
   this.criptomonedasService.editarCriptomoneda(this.criptomonedaModel).subscribe(Response => {
     this.listaCriptoActualizada.emit(Response.data);
     this.snackBar.open('Criptomoneda editada con éxito','',{

@@ -111,7 +111,19 @@ namespace BackEndExchange.HostedServices
                 {
 
                   var cripto = _ex.Criptomonedas.Single(d => d.Nombre == item.Key);
-                  if(calcularRango((decimal)cripto.PrecioCompra, (decimal)item.Value.Value<decimal?>("usd")) == 1)
+
+
+                  //ejecutar 1 vez si paso mucho tiempo desde la ultima ejecucion
+
+                  /*
+                  cripto.PrecioCompra = item.Value.Value<decimal?>("usd");
+
+                  _ex.Entry(cripto).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                  _ex.SaveChanges();
+                  */
+
+
+                  if (calcularRango((decimal)cripto.PrecioCompra, (decimal)item.Value.Value<decimal?>("usd")) == 1)
                   {
                     cripto.PrecioCompra = item.Value.Value<decimal?>("usd");
 

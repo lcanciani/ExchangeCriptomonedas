@@ -14,7 +14,7 @@ import { ExtraccionComponent } from './extraccion/extraccion.component';
 import { MailComponent } from './mail/mail.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 import { RegistrarUsuarioComponent } from './usuario/registrar-usuario/registrar-usuario.component';
-
+import {ReportesComponent} from './reportes/reportes.component'
 const routes: Routes = [
   {path: '',  canActivate:[AuthGuard] ,children:[
     {path: '', component: DashboardComponent},
@@ -28,7 +28,7 @@ const routes: Routes = [
 
     {path: 'enviarMail', component: MailComponent},
     {path: 'estadisticas', component: EstadisticasComponent},
-    
+    {path: 'reportes', component: ReportesComponent},
 
     {path: 'extraccion', component: ExtraccionComponent},
     {path: 'deposito', component: DepositoComponent},

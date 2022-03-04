@@ -7,6 +7,7 @@
     <div>
         <form action="" [formGroup]="formConfigurarVenta">
         <p>Ingrese el monto a comprar en pesos argentinos.</p>
+        
         <div class="flex">
             <div>
             <mat-form-field  floatLabel="always">
@@ -17,6 +18,24 @@
                 <span matPrefix>$&nbsp;</span>
                 
               </mat-form-field>
+
+
+              <mat-form-field >
+                <mat-label>Forma de compra</mat-label>
+                <mat-select  formControlName="formaCompra" (selectionChange)="cambioFormaPago()" [(ngModel)]="selected">
+                  <mat-option *ngFor="let forma of formaCompra" [value]="forma.value">
+                      <div>
+                      <img [src]="forma.imgUrl" alt="" height="15px" width="15px">
+                    {{forma.viewValue}}
+                </div>
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <span *ngIf="this.validarCantidad ">
+                Saldo insuficiente
+              </span>
+
             </div>
         </div>
         <!--<input type="number" (input)="onSearchChange($event.target.value)" formControlName="monto">-->
@@ -27,7 +46,7 @@
         <div class="flex">
             
         <mat-form-field  >
-            <input  matInput type="number" value="{{datosVenta.cantidad}}" formControlName="cantidad">
+            <input  matInput type="number" value="{{this.cantidadCompraCripto }}" formControlName="cantidad">
         </mat-form-field>
         
     </div>
@@ -39,7 +58,7 @@
 
     </div>
     <div class="flex">
-        <button [disabled]="!formConfigurarVenta.valid" mat-raised-button color="primary"  (click)="confirmarVenta()">Confirmar compra</button>
+        <button [disabled]="this.validarCantidad || !formConfigurarVenta.valid" mat-raised-button color="primary"  (click)="confirmarVenta()">Confirmar compra</button>
     </div>
 
 

@@ -30,7 +30,10 @@ import {JwtInterceptors} from './security/jwt.interceptor';
 import { MailComponent } from './mail/mail.component';
 import { MailService } from './mail/mail.service';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
-
+import { ReportesComponent } from './reportes/reportes.component';
+import { DataSource } from '@angular/cdk/table';
+import { TerminosYCondicionesComponent } from './terminos-ycondiciones/terminos-ycondiciones.component';
+import { PreguntasFrecuentesComponent } from './preguntas-frecuentes/preguntas-frecuentes.component';
 
 @NgModule({
   declarations: [
@@ -53,13 +56,14 @@ import { EstadisticasComponent } from './estadisticas/estadisticas.component';
     ExtraccionComponent,
     MailComponent,
     EstadisticasComponent,
-    
+    ReportesComponent,
+    TerminosYCondicionesComponent,
+    PreguntasFrecuentesComponent
   ],
   imports: [
     CommonModule,
     AplicacionRoutingModule,
     SharedModule
-    
   ],
   exports:[
     DeslogearComponent,
@@ -72,7 +76,8 @@ import { EstadisticasComponent } from './estadisticas/estadisticas.component';
     FormCriptoComponent,
     ListaCriptoComponent,
     DashboardComponent,
-    UsuarioComponent
+    UsuarioComponent,
+    ReportesComponent
   ],
   providers: [MailService,
               CriptomonedasService,

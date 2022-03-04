@@ -7,6 +7,10 @@ import { ConfirmarCompraModel } from './confirmar-compra/confirmarCompra.model';
 import { CompraService } from './compra.service';
 import { VentaService } from '../venta/venta.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DashboardService } from '../dashboard/dashboard.service';
+import { DashboardModel } from '../dashboard/dashboard.model';
+import { LoginService } from '../login/login.service';
+
 
 @Component({
   selector: 'app-compra',
@@ -15,7 +19,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class CompraComponent implements OnInit {
 
-  listaCriptomonedas:CriptomonedaModel[];
+  listaCriptomonedas:CriptomonedaModel[] = [];
+  listaCriptomonedasVenta: CriptomonedaModel[] = [];
+  listaUsuarioCripto: DashboardModel[] = [];
+  listaCriptoNombre: string[] = [];
+  usuarioCripto: DashboardModel;
   criptomoneda: CriptomonedaModel;
   estadoPrecioCompra: number;
   
@@ -23,12 +31,49 @@ export class CompraComponent implements OnInit {
               private _route: Router,
               private _compraService: CompraService,
               private _ventaService: VentaService,
-              private _snackBar: MatSnackBar) { }
+              private _snackBar: MatSnackBar,
+              private _dasboardService: DashboardService,
+              private _loginService: LoginService) { }
 
   ngOnInit(): void {
 
-    this._criptomonedasService.getCriptomonedas().subscribe(resp => {
-      this.listaCriptomonedas = resp.data;
+
+    this._dasboardService.getDataForDashboard(this._loginService.usuarioData.idUsuario).subscribe(resp => {
+      this.listaUsuarioCripto = resp.data
+      
+      this.listaUsuarioCripto.forEach(element => {
+        if(element.cantidad !== null ){
+         this.listaCriptoNombre.push(element.criptomoneda);            
+        }
+      });  
+
+      this._criptomonedasService.getCriptomonedas().subscribe(resp => {
+
+
+        resp.data.forEach(element => {
+          if(!element.fechaBaja ){
+            this.listaCriptomonedas.push(element);
+          }       
+          });
+  
+          this.listaCriptoNombre.forEach( nombreCripto => {
+            this.listaCriptomonedas.forEach(cripto => {
+              if(nombreCripto === cripto.nombre){
+                this.listaCriptomonedasVenta.push(cripto);
+              }
+            });
+  
+  
+        });
+      
+    });
+
+    
+
+      
+
+
+      //this.listaCriptomonedas = resp.data;
     });
 
     this._ventaService.estadoPrecioCompra().subscribe(resp =>{

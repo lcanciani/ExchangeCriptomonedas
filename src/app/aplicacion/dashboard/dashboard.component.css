@@ -1,6 +1,4 @@
-table{
-    width: 100%;
-}
+
 .container{
     margin: 15px;
 }
@@ -8,4 +6,11 @@ table{
 .mat-form-field {
     font-size: 14px;
     width: 100%;
+  }
+
+  .tablaMovimientos{
+      width: 100%;
+  }
+  .tablaBilletera{
+      width: 40%;
   }

@@ -65,8 +65,7 @@ getConfirmarCompra():Observable<ConfirmarCompraModel>{
 
 }
 insertarCompra():Observable<Respuesta>{
-console.log('llegue CompraService.insertarCompra()')
-console.log(this._confirmarCompraModel)
+
  return this._http.post<Respuesta>(`${this._url}`,this._confirmarCompraModel,httpOptions);
 }
 }
